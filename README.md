@@ -2,15 +2,6 @@
 A community effort to create type definitions for the dnd5e system in Foundry VTT
 
 
-<div align=center>
-[![League Discord Server](https://img.shields.io/discord/732325252788387980?label=League%20of%20Extraordinary%20Foundry%20VTT%20Developers)](https://discord.gg/52DNPzqm2Z)
-<!-- ![GitHub 0.7.9 issues by-label](https://img.shields.io/github/issues-raw/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/foundry%200.7.9?color=%23fe631d)
-![GitHub closed 0.7.9 issues by-label](https://img.shields.io/github/issues-closed-raw/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/foundry%200.7.9?color=%23fe631d)
-![GitHub 0.8.0 issues by-label](https://img.shields.io/github/issues-raw/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/foundry%200.8.0?color=%23fe631d)
-![GitHub closed 0.8.0 issues by-label](https://img.shields.io/github/issues-closed-raw/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/foundry%200.8.0?color=%23fe631d) -->
-
-</div>
-
 ## Objective
 
 Provide a third party typescript definition library for the [Foundry VTT D&D 5e System](https://gitlab.com/foundrynet/dnd5e) which can be installed and used alongside [foundry-vtt-dnd5e-types](https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types) to bring typescript support to dnd5e related modules.
