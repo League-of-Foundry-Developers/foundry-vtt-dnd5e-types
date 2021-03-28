@@ -1,0 +1,70 @@
+{
+  "name": "@league-of-foundry-developers/foundry-vtt-dnd5e-types",
+  "version": "1.2.4-1",
+  "description": "TypeScript type definitions for the dnd5e system of Foundry VTT",
+  "scripts": {
+    "lint": "tsc && eslint --ext .d.ts .",
+    "lint:fix": "eslint --fix --ext .d.ts .",
+    "lint:ci": "eslint --ext .d.ts .",
+    "eslint:report": "eslint --output-file eslint_report.json --format json --ext .d.ts .",
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types"
+  },
+  "author": "Andrew Krigline",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/issues"
+  },
+  "homepage": "https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types",
+  "keywords": [
+    "foundry",
+    "foundry-vtt",
+    "types",
+    "dnd5e",
+    "typscript"
+  ],
+  "dependencies": {
+    "@league-of-foundry-developers/foundry-vtt-types": "^0.7.9-5",
+    "@types/howler": "2.2.1",
+    "@types/jquery": "3.5.1",
+    "@types/socket.io-client": "^1.4.33",
+    "handlebars": "4.7.6",
+    "pixi-particles": "^4.3.0",
+    "pixi.js": "5.3.4",
+    "tinymce": "5.6.2",
+    "typescript": "^4.1.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-tsdoc": "^0.2.11",
+    "husky": "^5.1.1",
+    "lint-staged": "^10.5.4",
+    "pinst": "^2.1.6",
+    "prettier": "^2.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(d.ts)": "eslint --fix",
+    "*.(js|json)": "prettier --write"
+  },
+  "files": [
+    "index.d.ts",
+    "dnd5e"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
