@@ -4,7 +4,6 @@ about: Suggest an idea for this project beyond plain type definitions
 title: ''
 labels: enhancement
 assignees:
-
 ---
 
 **In which branch or system version should this feature be added?**

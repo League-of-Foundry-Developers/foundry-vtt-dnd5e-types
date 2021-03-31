@@ -1,10 +1,11 @@
 # foundry-vtt-dnd5e-types
-A community effort to create type definitions for the dnd5e system in Foundry VTT
 
+A community effort to create type definitions for the dnd5e system in Foundry VTT
 
 ## Objective
 
 Provide a third party typescript definition library for the [Foundry VTT D&D 5e System](https://gitlab.com/foundrynet/dnd5e) which can be installed and used alongside [foundry-vtt-dnd5e-types](https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types) to bring typescript support to dnd5e related modules.
+
 ## Supported dnd5e versions
 
 At the moment, only 1.2.4 (0.7.9) is supported. Work on 1.3.0 (and 0.8.x) is in the pipeline.

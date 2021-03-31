@@ -4,7 +4,6 @@ about: Create a report to help us improve
 title: ''
 labels: bug
 assignees:
-
 ---
 
 **In which branch or system version does the problem occur?**

@@ -66,7 +66,7 @@ We use [prettier](https://prettier.io/) to automatically format the code and hav
 
 In TSDoc comments, always make sure to align the `-` for all `@param`s.
 
-In very rare occasions, it is acceptable to disable prettier for a specific part of the code to improve the formatting manually, e.g. for deeply nested conditional types, which are simply unreadable if we let prettier format them. See  [Prettier – Ignoring Code](https://prettier.io/docs/en/ignore.html#javascript) to find out how to do this.
+In very rare occasions, it is acceptable to disable prettier for a specific part of the code to improve the formatting manually, e.g. for deeply nested conditional types, which are simply unreadable if we let prettier format them. See [Prettier – Ignoring Code](https://prettier.io/docs/en/ignore.html#javascript) to find out how to do this.
 
 ### General Guidelines
 
@@ -87,7 +87,7 @@ In both cases, provide the default value for `getDefaultOptions` in TSDoc.
 
 Example:
 
-```typescript
+````typescript
 declare class ActorSheet<
   D extends object = ActorSheet.Data<Actor>,
   O extends Actor = D extends ActorSheet.Data<infer T> ? T : Actor
@@ -115,13 +115,14 @@ declare class ActorSheet<
 
   /* ... */
 }
-```
+````
 
 #### Type for a class being used as a value (e.g. assigned to a variable)
 
 The type should most likely be `ConstructorOf<NameOfTheClass>`. This will also allow deriving classes to be used as value. In rare occasions (i.e. when really only instances of this specific class may be assigned, no deriving classes), `typeof NameOfTheClass` can be used.
 
 Example:
+
 ```typescript
   /**
    * Configuration for the ActiveEffect embedded Entity
@@ -146,6 +147,7 @@ This is just a static property of the class. Add it to the class at the very bot
 Example:
 
 In `foundry.js`
+
 ```javascript
 class AVSettings {
   /* ... */
@@ -160,6 +162,7 @@ AVSettings.AV_MODES = {
 ```
 
 Type definition
+
 ```typescript
 declare class AVSettings {
   /* ... */

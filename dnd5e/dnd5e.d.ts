@@ -1,14 +1,9 @@
-interface Game {
-  dnd5e: Game.DND5E;
-}
-declare namespace Game {
-  interface DND5E {
-    config: DND5E.Config;
-  }
+import '@league-of-foundry-developers/foundry-vtt-types';
 
-  namespace DND5E {
-    interface Config {
-      foo: string;
-    }
+interface DND5e {}
+
+declare global {
+  export interface Game {
+    dnd5e: DND5e;
   }
 }
