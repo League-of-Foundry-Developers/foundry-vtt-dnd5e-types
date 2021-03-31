@@ -1,17 +1,14 @@
-import '@league-of-foundry-developers/foundry-vtt-types';
-
-declare type CONFIG = {
-  foo: string;
-};
-
-declare type DND5E = {
-  config: CONFIG;
-};
-
-declare class Game {
-  dnd5e: DND5E;
+interface Game {
+  dnd5e: Game.DND5E;
 }
+declare namespace Game {
+  interface DND5E {
+    config: DND5E.Config;
+  }
 
-declare module '@league-of-foundry-developers/foundry-vtt-types' {
-  let game: Game;
+  namespace DND5E {
+    interface Config {
+      foo: string;
+    }
+  }
 }
