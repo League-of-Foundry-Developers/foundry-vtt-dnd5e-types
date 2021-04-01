@@ -29,6 +29,6 @@ import './dnd5e/apps/short-rest';
 import './dnd5e/apps/trait-selector';
 
 import './dnd5e/item/entity';
-import './dnd5e/item/sheet';
+import './dnd5e/item/sheets';
 
 import './dnd5e/pixi/ability-template';

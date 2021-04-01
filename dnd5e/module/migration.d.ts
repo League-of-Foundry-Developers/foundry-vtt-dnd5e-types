@@ -1,0 +1,11 @@
+export declare function migrateWorld(...args: any[]): Promise<any>;
+export declare function migrateCompendium(...args: any[]): Promise<any>;
+export declare function migrateActorData(...args: any[]): Promise<any>;
+export declare function cleanActorData(...args: any[]): any;
+export declare function migrateItemData(...args: any[]): any;
+export declare function migrateSceneData(...args: any[]): any;
+export declare function _migrateActorMovement(...args: any[]): any;
+export declare function _migrateActorSenses(...args: any[]): any;
+export declare function _migrateItemAttunement(...args: any[]): any;
+export declare function purgeFlags(...args: any[]): Promise<any>;
+export declare function removeDeprecatedObjects(...args: any[]): any;
