@@ -4,7 +4,7 @@ import './dnd5e/dnd5e';
 
 import './dnd5e/module/canvas';
 import './dnd5e/module/chat';
-import './dnd5e/module/classFeature';
+import './dnd5e/module/classFeatures';
 import './dnd5e/module/combat';
 import './dnd5e/module/config';
 import './dnd5e/module/dice';

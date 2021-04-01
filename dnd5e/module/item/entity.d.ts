@@ -134,7 +134,7 @@ declare namespace Item5e {
       chatFlavor: string;
       critical: boolean | null;
       damage: {
-        parts: [string, DND5e.DamageType][];
+        parts: [string, DND5e.DamageType | 'none'][];
         versatile: string;
       };
       formula: string;
@@ -193,7 +193,7 @@ declare namespace Item5e {
       proficient: number;
     }
 
-    export interface Class<Choices extends DND5e.Skills[] = DND5e.Skills[]> {
+    export interface Class<Choices extends DND5e.SkillType[] = DND5e.SkillType[]> {
       levels: number;
       subclass: string;
       hitDice: `d${number}`;
@@ -209,7 +209,7 @@ declare namespace Item5e {
 
     export interface Spell {
       level: DND5e.SpellLevel;
-      school: DND5e.School;
+      school: DND5e.SpellSchool;
       components: {
         value: string;
         vocal: boolean;
@@ -251,7 +251,7 @@ declare namespace Item5e {
         value: number;
         weightless: boolean;
       };
-      currency: Record<DND5e.Currencies, number>;
+      currency: Record<DND5e.Currency, number>;
     }
   }
 
@@ -288,7 +288,7 @@ declare namespace Item5e {
 
     export type Tool = Templates.ItemDescription & Templates.PhysicalItem & Templates.Tool;
     export type Loot = Templates.ItemDescription & Templates.PhysicalItem;
-    export type Class<Choices extends DND5e.Skills[] = DND5e.Skills[]> = Templates.ItemDescription &
+    export type Class<Choices extends DND5e.SkillType[] = DND5e.SkillType[]> = Templates.ItemDescription &
       Templates.Class<Choices>;
 
     export type Spell = Templates.ItemDescription & Templates.ActivatedEffect & Templates.Action & Templates.Spell;

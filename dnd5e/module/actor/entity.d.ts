@@ -93,7 +93,7 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
     actorData: Actor5e.Data,
     bonuses: DND5e.AbilityBonus,
     checkBonus: number,
-    originalSkills: Record<DND5e.Skills, DND5e.Skill>
+    originalSkills: Record<DND5e.SkillType, DND5e.Skill>
   ): void;
 
   /* -------------------------------------------- */
@@ -291,21 +291,7 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
       keepBio,
       keepVision,
       transformTokens
-    }: {
-      keepPhysical: boolean;
-      keepMental: boolean;
-      keepSaves: boolean;
-      keepSkills: boolean;
-      mergeSaves: boolean;
-      mergeSkills: boolean;
-      keepClass: boolean;
-      keepFeats: boolean;
-      keepSpells: boolean;
-      keepItems: boolean;
-      keepBio: boolean;
-      keepVision: boolean;
-      transformTokens: boolean;
-    }
+    }: Record<DND5e.PolymorphSetting | 'transformTokens', boolean>
   ): ReturnType<Scene['updateEmbeddedEntity']> | undefined;
 
   /* -------------------------------------------- */
@@ -409,7 +395,7 @@ declare namespace Actor5e {
         };
         movement: Record<DND5e.MovementType, number> & {
           hover: boolean;
-          units: string;
+          units: DND5e.Unit;
         };
       };
       details: {
@@ -433,14 +419,14 @@ declare namespace Actor5e {
         // Condition immunity
         ci: TraitData<DND5e.DamageType>;
       };
-      currency: Record<DND5e.Currencies, number>;
+      currency: Record<DND5e.Currency, number>;
     }
 
     export interface Creature {
       attributes: {
         senses: Record<DND5e.Senses, number> & {
           special: string;
-          units: string;
+          units: DND5e.Unit;
         };
         spellcasting: DND5e.AbilityType;
         details: {
@@ -448,7 +434,7 @@ declare namespace Actor5e {
           race: string;
         };
         skills: Record<
-          DND5e.Skills,
+          DND5e.SkillType,
           {
             value: number;
             ability: DND5e.Ability;
@@ -506,7 +492,7 @@ declare namespace Actor5e {
       >;
 
       traits: {
-        weaponProf: TraitData<string>;
+        weaponProf: TraitData<DND5e.WeaponProficiency>;
         armorProf: TraitData<string>;
         toolProf: TraitData<DND5e.ToolProficiency>;
       };

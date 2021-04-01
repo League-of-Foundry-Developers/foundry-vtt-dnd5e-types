@@ -46,6 +46,7 @@ declare namespace DND5e {
     | 'feat'
     | 'backpack';
 
+  export type DistanceUnit = 'none' | 'self' | 'touch' | 'spec' | 'any';
   export type TargetUnitType = 'none' | 'self' | 'touch' | 'special' | 'any' | 'ft' | 'miles';
   export type DamageType =
     | 'acid'
@@ -60,11 +61,11 @@ declare namespace DND5e {
     | 'psychic'
     | 'radiant'
     | 'slashing'
-    | 'thunder'
-    | 'none';
+    | 'thunder';
+  export type DamageResistanceType = DamageType | 'none';
 
   export type AttackType = 'mwak' | 'rwak' | 'rsak' | 'msak';
-  export type ActionType = AttackType | 'save';
+  export type ActionType = AttackType | 'save' | 'heal' | 'abil' | 'util' | 'other';
   export type ActivationType = 'action' | 'bonus' | 'reaction' | 'special';
   export type ToolProficiency =
     | 'herb'
@@ -78,22 +79,8 @@ declare namespace DND5e {
     | 'thief'
     | 'vehicle';
 
-  export type TargetType =
-    | 'ally'
-    | 'cone'
-    | 'creature'
-    | 'cube'
-    | 'cylinder'
-    | 'enemy'
-    | 'line'
-    | 'none'
-    | 'object'
-    | 'radius'
-    | 'self'
-    | 'space'
-    | 'sphere'
-    | 'square'
-    | 'wall';
+  export type AreaTarget = 'cone' | 'cube' | 'cylinder' | 'line' | 'radius' | 'sphere' | 'square' | 'wall';
+  export type TargetType = AreaTarget | 'ally' | 'creature' | 'enemy' | 'none' | 'object' | 'self' | 'space';
 
   export type DurationType =
     | 'days'
@@ -119,7 +106,7 @@ declare namespace DND5e {
     total: number;
   }
 
-  export type Skills =
+  export type SkillType =
     | 'acr'
     | 'ani'
     | 'arc'
@@ -166,20 +153,32 @@ declare namespace DND5e {
 
   export type Senses = 'darkvision' | 'blindsense' | 'tremorsense' | 'truesight' | 'special';
 
-  export type Currencies = 'cp' | 'sp' | 'gp' | 'ep' | 'pp';
+  export type Currency = 'cp' | 'sp' | 'gp' | 'ep' | 'pp';
 
-  export type School = 'abj' | 'con' | 'div' | 'enc' | 'evo' | 'ill' | 'nec' | 'trs';
-  export type Preparation = 'prepared' | 'always';
+  export type SpellSchool = 'abj' | 'con' | 'div' | 'enc' | 'evo' | 'ill' | 'nec' | 'trs';
+  export type Preparation = 'prepared' | 'pact' | 'always' | 'atwill' | 'innate';
 
   export type SpellLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   export type SpellType = `spell${SpellLevel}` | 'pact';
 
   export type Resources = 'primary' | 'secondary' | 'tertiary';
 
-  export type ConsumeType = string;
+  export type ConsumeType = 'ammo' | 'attribute' | 'material' | 'charges';
+  export type ConsumableType = 'ammo' | 'potion' | 'poison' | 'food' | 'scroll' | 'wand' | 'rod' | 'trinket';
   export type ConsumeTarget = string;
 
-  export type ArmorType = 'light' | 'medium' | 'heavy';
+  export type ArmorType =
+    | 'light'
+    | 'medium'
+    | 'heavy'
+    | 'bonus'
+    | 'natural'
+    | 'shield'
+    | 'clothing'
+    | 'trinket'
+    | 'vehicle';
+
+  export type ArmorProficiencies = 'lgt' | 'med' | 'hvy' | 'shl';
 
   export type Size = 'grg' | 'huge' | 'lg' | 'med' | 'sm' | 'tiny';
   export type Alignment = 'ce' | 'cg' | 'cn' | 'le' | 'lg' | 'ln' | 'ne' | 'ng' | 'tn';
@@ -201,6 +200,108 @@ declare namespace DND5e {
     | 'restrained'
     | 'stunned'
     | 'unconscious';
+
+  export type WeaponProficiency = 'sim' | 'mar';
+
+  export type TimePeriod = 'inst' | 'turn' | 'round' | 'minute' | 'hour' | 'day' | 'month' | 'year' | 'perm' | 'spec';
+
+  export type AbilityActivationType =
+    | 'none'
+    | 'action'
+    | 'bonus'
+    | 'reaction'
+    | 'minute'
+    | 'hour'
+    | 'day'
+    | 'special'
+    | 'legendary'
+    | 'lair'
+    | 'crew';
+
+  export type UsePeriod = 'sr' | 'lr' | 'day' | 'charges';
+  export type Unit = 'ft' | 'mi';
+
+  export type SpellcasterProgression = 'none' | 'full' | 'half' | 'third' | 'pact' | 'artificer';
+  export type SpellScaling = 'none' | 'cantrip' | 'level';
+
+  export type WeaponProperty =
+    | 'ada'
+    | 'amm'
+    | 'fin'
+    | 'fir'
+    | 'foc'
+    | 'hvy'
+    | 'lgt'
+    | 'lod'
+    | 'mgc'
+    | 'rch'
+    | 'rel'
+    | 'ret'
+    | 'sil'
+    | 'spc'
+    | 'thr'
+    | 'two'
+    | 'ver';
+
+  export type SpellComponent = 'V' | 'S' | 'M';
+
+  export type PolymorphSetting =
+    | 'keepPhysical'
+    | 'keepMental'
+    | 'keepSaves'
+    | 'keepSkills'
+    | 'mergeSaves'
+    | 'mergeSkills'
+    | 'keepClass'
+    | 'keepFeats'
+    | 'keepSpells'
+    | 'keepItems'
+    | 'keepBio'
+    | 'keepVision';
+
+  export type Language =
+    | 'common'
+    | 'aarakocra'
+    | 'abyssal'
+    | 'aquan'
+    | 'auran'
+    | 'celestial'
+    | 'deep'
+    | 'draconic'
+    | 'druidic'
+    | 'dwarvish'
+    | 'elvish'
+    | 'giant'
+    | 'gith'
+    | 'gnomish'
+    | 'goblin'
+    | 'gnoll'
+    | 'halfling'
+    | 'ignan'
+    | 'infernal'
+    | 'orc'
+    | 'primordial'
+    | 'sylvan'
+    | 'terran'
+    | 'cant'
+    | 'undercommon';
+
+  export type CharacterFlagArr = [
+    'diamondSoul',
+    'elvenAccuracy',
+    'halflingLucky',
+    'initiativeAdv',
+    'initiativeAlert',
+    'jackOfAllTrades',
+    'observantFeat',
+    'powerfulBuild',
+    'reliableTalent',
+    'remarkableAthlete',
+    'weaponCriticalThreshold',
+    'spellCriticalThreshold',
+    'meleeCriticalDamageDice'
+  ];
+  export type CharacterFlag = CharacterFlagArr[number];
 }
 
 declare global {
@@ -231,11 +332,36 @@ declare global {
       rollItemMacro: typeof macros.rollItemMacro;
     };
 
-    // TODO: Handle sheet registering/unregistering.
     CONFIG: {
       DND5E: DND5e;
       Actor: {
         entityClass: Actor5e;
+        sheetClasses: {
+          character: {
+            'dnd5e.ActorSheet5eCharacter': {
+              id: 'dnd5e.ActorSheet5eCharacter';
+              default: boolean;
+              cls: ActorSheet5eCharacter;
+              label: string;
+            };
+          };
+          npc: {
+            'dnd5e.ActorSheet5eNPC': {
+              id: 'dnd5e.ActorSheet5eNPC';
+              default: boolean;
+              cls: ActorSheet5eNPC;
+              label: string;
+            };
+          };
+          vehicle: {
+            'dnd5e.ActorSheet5eVehicle': {
+              id: 'dnd5e.ActorSheet5eVehicle';
+              default: boolean;
+              cls: ActorSheet5eVehicle;
+              label: string;
+            };
+          };
+        };
       };
 
       Item: {
