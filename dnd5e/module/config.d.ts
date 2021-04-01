@@ -1,4 +1,5 @@
 import '@league-of-foundry-developers/foundry-vtt-types';
+
 import { ClassFeatures } from './classFeatures';
 import type DND5e from '../dnd5e';
 
