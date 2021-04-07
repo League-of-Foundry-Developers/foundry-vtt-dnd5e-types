@@ -1,5 +1,4 @@
-import '@league-of-foundry-developers/foundry-vtt-types';
-
+/**
+ * A specialized Dialog subclass for ability usage
+ */
 declare class AbilityUseDialog {}
-
-export default AbilityUseDialog;

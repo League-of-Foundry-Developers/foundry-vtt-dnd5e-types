@@ -1,9 +1,3 @@
-import '@league-of-foundry-developers/foundry-vtt-types';
-
-import type DND5e from '../../dnd5e';
-import type Actor5e from '../actor/entity';
-import type { d20Roll, damageRoll } from '../dice';
-
 interface Labels {
   spell: {
     level: string;
@@ -374,8 +368,8 @@ declare class Item5e extends Item<Item5e.Data> {
 }
 
 declare namespace Item5e {
-  export namespace Templates {
-    export interface ItemDescription {
+  namespace Templates {
+    interface ItemDescription {
       description: {
         value: string;
         chat: string;
@@ -384,7 +378,7 @@ declare namespace Item5e {
       source: string;
     }
 
-    export interface PhysicalItem {
+    interface PhysicalItem {
       quantity: number;
       weight: number;
       price: number;
@@ -395,7 +389,7 @@ declare namespace Item5e {
       identified: false;
     }
 
-    export interface ActivatedEffect {
+    interface ActivatedEffect {
       activation: {
         type: DND5e.ActivationType;
         cost: number;
@@ -433,7 +427,7 @@ declare namespace Item5e {
       };
     }
 
-    export interface Action {
+    interface Action {
       ability: DND5e.AbilityType | null;
       actionType: DND5e.ActionType | null;
       attackBonus: number;
@@ -451,7 +445,7 @@ declare namespace Item5e {
       };
     }
 
-    export interface Mountable {
+    interface Mountable {
       armor: {
         value: number;
       };
@@ -463,13 +457,13 @@ declare namespace Item5e {
       };
     }
 
-    export interface Weapon {
+    interface Weapon {
       weaponType: string;
       properties: {};
       proficient: boolean;
     }
 
-    export interface Equipment {
+    interface Equipment {
       armor: {
         type: DND5e.ArmorType;
         value: number;
@@ -486,20 +480,20 @@ declare namespace Item5e {
       proficient: boolean;
     }
 
-    export interface Consumable {
+    interface Consumable {
       consumableType: string;
       uses: {
         autoDestroy: boolean;
       };
     }
 
-    export interface Tool {
+    interface Tool {
       ability: DND5e.Ability;
       chatFlavor: string;
       proficient: number;
     }
 
-    export interface Class<Choices extends DND5e.SkillType[] = DND5e.SkillType[]> {
+    interface Class<Choices extends DND5e.SkillType[] = DND5e.SkillType[]> {
       levels: number;
       subclass: string;
       hitDice: `d${number}`;
@@ -513,7 +507,7 @@ declare namespace Item5e {
       };
     }
 
-    export interface Spell {
+    interface Spell {
       level: DND5e.SpellLevel;
       school: DND5e.SpellSchool;
       components: {
@@ -543,7 +537,7 @@ declare namespace Item5e {
       };
     }
 
-    export interface Feat {
+    interface Feat {
       requirements: string;
       recharge: {
         value: number | string;
@@ -551,7 +545,7 @@ declare namespace Item5e {
       };
     }
 
-    export interface Backpack {
+    interface Backpack {
       capacity: {
         type: string;
         value: number;
@@ -561,7 +555,7 @@ declare namespace Item5e {
     }
   }
 
-  export interface Data extends Item.Data<Data.Data> {
+  interface Data extends Item.Data<Data.Data> {
     data: Data.Data;
     effects: ActiveEffect.Data[];
     img: string;
@@ -571,38 +565,36 @@ declare namespace Item5e {
     type: DND5e.ItemType;
   }
 
-  export namespace Data {
-    export type Weapon = Templates.ItemDescription &
+  namespace Data {
+    type Weapon = Templates.ItemDescription &
       Templates.PhysicalItem &
       Templates.ActivatedEffect &
       Templates.Action &
       Templates.Mountable &
       Templates.Weapon;
 
-    export type Equipment = Templates.ItemDescription &
+    type Equipment = Templates.ItemDescription &
       Templates.PhysicalItem &
       Templates.ActivatedEffect &
       Templates.Action &
       Templates.Mountable &
       Templates.Equipment;
 
-    export type Consumable = Templates.ItemDescription &
+    type Consumable = Templates.ItemDescription &
       Templates.PhysicalItem &
       Templates.ActivatedEffect &
       Templates.Action &
       Templates.Consumable;
 
-    export type Tool = Templates.ItemDescription & Templates.PhysicalItem & Templates.Tool;
-    export type Loot = Templates.ItemDescription & Templates.PhysicalItem;
-    export type Class<Choices extends DND5e.SkillType[] = DND5e.SkillType[]> = Templates.ItemDescription &
+    type Tool = Templates.ItemDescription & Templates.PhysicalItem & Templates.Tool;
+    type Loot = Templates.ItemDescription & Templates.PhysicalItem;
+    type Class<Choices extends DND5e.SkillType[] = DND5e.SkillType[]> = Templates.ItemDescription &
       Templates.Class<Choices>;
 
-    export type Spell = Templates.ItemDescription & Templates.ActivatedEffect & Templates.Action & Templates.Spell;
-    export type Feat = Templates.ItemDescription & Templates.ActivatedEffect & Templates.Action & Templates.Feat;
-    export type Backpack = Templates.ItemDescription & Templates.PhysicalItem & Templates.Backpack;
+    type Spell = Templates.ItemDescription & Templates.ActivatedEffect & Templates.Action & Templates.Spell;
+    type Feat = Templates.ItemDescription & Templates.ActivatedEffect & Templates.Action & Templates.Feat;
+    type Backpack = Templates.ItemDescription & Templates.PhysicalItem & Templates.Backpack;
 
-    export type Data = Weapon | Equipment | Consumable | Tool | Loot | Class | Spell | Feat | Backpack;
+    type Data = Weapon | Equipment | Consumable | Tool | Loot | Class | Spell | Feat | Backpack;
   }
 }
-
-export default Item5e;

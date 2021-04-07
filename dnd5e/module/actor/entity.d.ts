@@ -1,8 +1,3 @@
-import '@league-of-foundry-developers/foundry-vtt-types';
-
-import type DND5e from '../../dnd5e';
-import type Item5e from '../item/entity';
-
 declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
   get isPolymorphed(): boolean;
 
@@ -310,7 +305,6 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
    */
   useSpell(item: Item5e, { configureDialog }: { configureDialog: boolean }): Promise<Roll>;
 }
-
 declare namespace Actor5e {
   type ClassFeatureUpdate = {
     _id: string;
@@ -320,16 +314,16 @@ declare namespace Actor5e {
     };
   };
 
-  export type TransformOptions = Record<DND5e.PolymorphSetting | 'transformTokens', boolean>;
+  type TransformOptions = Record<DND5e.PolymorphSetting | 'transformTokens', boolean>;
 
-  export type Encumbrance = {
+  type Encumbrance = {
     value: number;
     max: number;
     pct: number;
     encumbered: boolean;
   };
 
-  export type RestData = {
+  type RestData = {
     dhd: number;
     dhp: number;
     updateData: Record<string, number>;
@@ -337,7 +331,7 @@ declare namespace Actor5e {
     newDay: boolean;
   };
 
-  export interface Data extends Actor.Data<Data.Data, Item5e.Data> {
+  interface Data extends Actor.Data<Data.Data, Item5e.Data> {
     folder: string;
     img: string;
     name: string;
@@ -345,13 +339,13 @@ declare namespace Actor5e {
     sort: number;
   }
 
-  export namespace Templates {
+  namespace Templates {
     type TraitData<Trait> = {
       values: Trait[];
       custom: string;
     };
 
-    export interface Common {
+    interface Common {
       abilities: Record<
         DND5e.AbilityType,
         {
@@ -403,7 +397,7 @@ declare namespace Actor5e {
       currency: Record<DND5e.Currency, number>;
     }
 
-    export interface Creature {
+    interface Creature {
       attributes: {
         senses: Record<DND5e.Senses, number> & {
           special: string;
@@ -432,7 +426,7 @@ declare namespace Actor5e {
       };
     }
 
-    export interface Character {
+    interface Character {
       attributes: {
         death: {
           success: number;
@@ -479,7 +473,7 @@ declare namespace Actor5e {
       };
     }
 
-    export interface NPC {
+    interface NPC {
       details: {
         type: string;
         environment: string;
@@ -511,7 +505,7 @@ declare namespace Actor5e {
       };
     }
 
-    export interface Vehicle {
+    interface Vehicle {
       abilities: Record<
         DND5e.MentalAbility,
         {
@@ -562,13 +556,11 @@ declare namespace Actor5e {
     }
   }
 
-  export namespace Data {
-    export type Character = Templates.Common & Templates.Creature & Templates.Character;
-    export type NPC = Templates.Common & Templates.Creature & Templates.NPC;
-    export type Vehicle = Templates.Common & Templates.Vehicle;
+  namespace Data {
+    type Character = Templates.Common & Templates.Creature & Templates.Character;
+    type NPC = Templates.Common & Templates.Creature & Templates.NPC;
+    type Vehicle = Templates.Common & Templates.Vehicle;
 
-    export type Data = Character | NPC | Vehicle;
+    type Data = Character | NPC | Vehicle;
   }
 }
-
-export default Actor5e;

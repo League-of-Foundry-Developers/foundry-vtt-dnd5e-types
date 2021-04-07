@@ -1,7 +1,3 @@
-import '@league-of-foundry-developers/foundry-vtt-types';
-
-import DND5e from '../dnd5e';
-
 /**
  * A standardized helper function for simplifying the constant parts of a multipart roll formula
  *
@@ -12,7 +8,15 @@ import DND5e from '../dnd5e';
  *
  * @returns The resulting simplified formula
  */
-export declare function simplifyRollFormula(formula: string, data: Actor.Data | Item.Data): string;
+declare function simplifyRollFormula(
+  formula: string,
+  data: Actor.Data | Item.Data,
+  {
+    constantFirst
+  }?: {
+    constantFirst: boolean;
+  }
+): string;
 
 /**
  * Only some terms are supported by simplifyRollFormula, this method returns true when the term is not supported.
@@ -53,7 +57,7 @@ declare function _isUnsupportedTerm(term: any): boolean;
  *
  * @returns A Promise which resolves once the roll workflow has completed
  */
-export declare function d20Roll<Data extends Actor.Data | Item.Data = Actor.Data | Item.Data>({
+declare function d20Roll({
   parts,
   data,
   event,
@@ -149,7 +153,7 @@ declare function _d20RollDialog({
  *
  * @returns A Promise which resolves once the roll workflow has completed
  */
-export declare function damageRoll<Data extends Actor.Data | Item.Data = Actor.Data | Item.Data>({
+declare function damageRoll({
   parts,
   actor,
   data,
@@ -161,8 +165,8 @@ export declare function damageRoll<Data extends Actor.Data | Item.Data = Actor.D
   flavor,
   allowCritical,
   critical,
-  criticalBonusDie,
-  criticalMuliplier,
+  criticalBonusDice,
+  criticalMultiplier,
   fastForward,
   dialogOptions,
   chatMessage,
@@ -179,8 +183,8 @@ export declare function damageRoll<Data extends Actor.Data | Item.Data = Actor.D
   flavor: string;
   allowCritical?: boolean;
   critical?: boolean;
-  criticalBonusDie?: number;
-  criticalMuliplier?: number;
+  criticalBonusDice?: number;
+  criticalMultiplier?: number;
   fastForward?: boolean | null;
   dialogOptions: Partial<Dialog.Options>;
   chatMessage?: boolean;
@@ -193,7 +197,7 @@ export declare function damageRoll<Data extends Actor.Data | Item.Data = Actor.D
  * Present a Dialog form which creates a damage roll once submitted
  * @returns the damage roll
  */
-export declare function _damageRollDialog<Data extends Actor.Data | Item.Data = Actor.Data | Item.Data>({
+declare function _damageRollDialog<Data extends Actor.Data | Item.Data = Actor.Data | Item.Data>({
   template,
   title,
   parts,
@@ -210,3 +214,12 @@ export declare function _damageRollDialog<Data extends Actor.Data | Item.Data = 
   rollMode: DND5e.RollMode;
   roll: (parts: string[], crit: boolean, form: HTMLFormElement) => Roll<Data>;
 }): Promise<Roll<Data> | null>;
+
+declare type DND5eDice = {
+  simplifyRollFormula: typeof simplifyRollFormula;
+  _isUnsupportedTerm: typeof _isUnsupportedTerm;
+  d20Roll: typeof d20Roll;
+  _d20RollDialog: typeof _d20RollDialog;
+  damageRoll: typeof damageRoll;
+  _damageRollDialog: typeof _damageRollDialog;
+};

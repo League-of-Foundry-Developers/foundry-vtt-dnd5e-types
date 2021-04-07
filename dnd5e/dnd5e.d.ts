@@ -1,149 +1,106 @@
-import '@league-of-foundry-developers/foundry-vtt-types';
+declare interface Game {
+  dnd5e: {
+    applications: {
+      AbilityUseDialog: AbilityUseDialog;
+      ActorSheetFlags: ActorSheetFlags;
+      ActorSheet5eCharacter: ActorSheet5eCharacter;
+      ActorSheet5eNPC: ActorSheet5eNPC;
+      ActorSheet5eVehicle: ActorSheet5eVehicle;
+      ItemSheet5e: ItemSheet5e;
+      ShortRestDialog: ShortRestDialog;
+      TraitSelector: TraitSelector;
+      ActorMovementConfig: ActorMovementConfig;
+    };
+    canvas: {
+      AbilityTemplate: AbilityTemplate;
+    };
+    config: DND5e;
+    dice: DND5eDice;
+    entities: {
+      Actor5e: Actor5e;
+      Item5e: Item5e;
+    };
+    macros: DND5eMacros;
+    migrations: DND5eMigration;
+    rollItemMacro: DND5eMacros['rollItemMacro'];
+  };
 
-// Import Modules
-import type { DND5e } from './module/config';
-import './module/settings';
-import './module/templates';
-import type { _getInitiativeFormula } from './module/combat';
-import type { measureDistances, getBarAttribute } from './module/canvas';
-
-// Import Entities
-import type Actor5e from './module/actor/entity';
-import type Item5e from './module/item/entity';
-
-// Import Applications
-import type AbilityTemplate from './module/pixi/ability-template';
-import type AbilityUseDialog from './module/apps/ability-use-dialog';
-import type ActorSheetFlags from './module/apps/actor-flags';
-import type ActorSheet5eCharacter from './module/actor/sheets/character';
-import type ActorSheet5eNPC from './module/actor/sheets/npc';
-import type ActorSheet5eVehicle from './module/actor/sheets/vehicle';
-import type ItemSheet5e from './module/item/sheet';
-import type ShortRestDialog from './module/apps/short-rest';
-import type TraitSelector from './module/apps/trait-selector';
-import type ActorMovementConfig from './module/apps/movement-config';
-import './module/apps/senses-config';
-
-// Import Helpers
-import './module/chat';
-import type * as dice from './module/dice';
-import type * as macros from './module/macros';
-import type * as migrations from './module/migration';
-
-declare global {
-  export interface Game {
-    dnd5e: {
-      applications: {
-        AbilityUseDialog: AbilityUseDialog;
-        ActorSheetFlags: ActorSheetFlags;
-        ActorSheet5eCharacter: ActorSheet5eCharacter;
-        ActorSheet5eNPC: ActorSheet5eNPC;
-        ActorSheet5eVehicle: ActorSheet5eVehicle;
-        ItemSheet5e: ItemSheet5e;
-        ShortRestDialog: ShortRestDialog;
-        TraitSelector: TraitSelector;
-        ActorMovementConfig: ActorMovementConfig;
+  CONFIG: {
+    DND5E: DND5e;
+    Actor: {
+      entityClass: Actor5e;
+      sheetClasses: {
+        character: {
+          'dnd5e.ActorSheet5eCharacter': {
+            id: 'dnd5e.ActorSheet5eCharacter';
+            default: boolean;
+            cls: ActorSheet5eCharacter;
+            label: string;
+          };
+        };
+        npc: {
+          'dnd5e.ActorSheet5eNPC': {
+            id: 'dnd5e.ActorSheet5eNPC';
+            default: boolean;
+            cls: ActorSheet5eNPC;
+            label: string;
+          };
+        };
+        vehicle: {
+          'dnd5e.ActorSheet5eVehicle': {
+            id: 'dnd5e.ActorSheet5eVehicle';
+            default: boolean;
+            cls: ActorSheet5eVehicle;
+            label: string;
+          };
+        };
       };
-      canvas: {
-        AbilityTemplate: AbilityTemplate;
-      };
-      config: DND5e;
-      dice: typeof dice;
-      entities: {
-        Actor5e: Actor5e;
-        Item5e: Item5e;
-      };
-      macros: typeof macros;
-      migrations: typeof migrations;
-      rollItemMacro: typeof macros.rollItemMacro;
     };
 
-    CONFIG: {
-      DND5E: DND5e;
-      Actor: {
-        entityClass: Actor5e;
-        sheetClasses: {
-          character: {
-            'dnd5e.ActorSheet5eCharacter': {
-              id: 'dnd5e.ActorSheet5eCharacter';
-              default: boolean;
-              cls: ActorSheet5eCharacter;
-              label: string;
-            };
-          };
-          npc: {
-            'dnd5e.ActorSheet5eNPC': {
-              id: 'dnd5e.ActorSheet5eNPC';
-              default: boolean;
-              cls: ActorSheet5eNPC;
-              label: string;
-            };
-          };
-          vehicle: {
-            'dnd5e.ActorSheet5eVehicle': {
-              id: 'dnd5e.ActorSheet5eVehicle';
-              default: boolean;
-              cls: ActorSheet5eVehicle;
-              label: string;
-            };
-          };
-        };
-      };
+    Item: {
+      entityClass: Item5e;
+    };
 
-      Item: {
-        entityClass: Item5e;
-      };
+    time: {
+      roundTime: number;
+    };
 
-      time: {
-        roundTime: number;
-      };
-
-      MeasuredTemplate: {
-        defaults: {
-          angle: number;
-        };
-      };
-
-      Combat: {
-        initiative: {
-          formula: string;
-        };
+    MeasuredTemplate: {
+      defaults: {
+        angle: number;
       };
     };
 
     Combat: {
-      _getInitiativeFormula: typeof _getInitiativeFormula;
+      initiative: {
+        formula: string;
+      };
     };
+  };
 
-    SquareGrid: {
-      measureDistances: typeof measureDistances;
-    };
+  Combat: {
+    _getInitiativeFormula: typeof _getInitiativeFormula;
+  };
 
-    Token: {
-      getBarAttribute: typeof getBarAttribute;
-    };
-  }
+  SquareGrid: {
+    measureDistances: typeof measureDistances;
+  };
+
+  Token: {
+    getBarAttribute: typeof getBarAttribute;
+  };
 }
 
 declare namespace DND5e {
-  export type PhysicalAbility = 'str' | 'dex' | 'con';
-  export type MentalAbility = 'int' | 'wis' | 'cha';
-  export type AbilityType = PhysicalAbility | MentalAbility;
+  type PhysicalAbility = 'str' | 'dex' | 'con';
+  type MentalAbility = 'int' | 'wis' | 'cha';
+  type AbilityType = PhysicalAbility | MentalAbility;
 
-  export type ItemType =
-    | 'weapon'
-    | 'equipment'
-    | 'consumable'
-    | 'tool'
-    | 'loot'
-    | 'class'
-    | 'spell'
-    | 'feat'
-    | 'backpack';
+  type ItemType = 'weapon' | 'equipment' | 'consumable' | 'tool' | 'loot' | 'class' | 'spell' | 'feat' | 'backpack';
 
-  export type DistanceUnit = 'none' | 'self' | 'touch' | 'spec' | 'any';
-  export type TargetUnitType = 'none' | 'self' | 'touch' | 'special' | 'any' | 'ft' | 'miles';
-  export type DamageType =
+  type DistanceUnit = 'none' | 'self' | 'touch' | 'spec' | 'any';
+  type TargetUnitType = 'none' | 'self' | 'touch' | 'special' | 'any' | 'ft' | 'miles';
+  type DamageType =
     | 'acid'
     | 'bludgeoning'
     | 'cold'
@@ -157,27 +114,17 @@ declare namespace DND5e {
     | 'radiant'
     | 'slashing'
     | 'thunder';
-  export type DamageResistanceType = DamageType | 'none';
+  type DamageResistanceType = DamageType | 'none';
 
-  export type AttackType = 'mwak' | 'rwak' | 'rsak' | 'msak';
-  export type ActionType = AttackType | 'save' | 'heal' | 'abil' | 'util' | 'other';
-  export type ActivationType = 'action' | 'bonus' | 'reaction' | 'special';
-  export type ToolProficiency =
-    | 'herb'
-    | 'art'
-    | 'disg'
-    | 'forg'
-    | 'game'
-    | 'music'
-    | 'navg'
-    | 'pois'
-    | 'thief'
-    | 'vehicle';
+  type AttackType = 'mwak' | 'rwak' | 'rsak' | 'msak';
+  type ActionType = AttackType | 'save' | 'heal' | 'abil' | 'util' | 'other';
+  type ActivationType = 'action' | 'bonus' | 'reaction' | 'special';
+  type ToolProficiency = 'herb' | 'art' | 'disg' | 'forg' | 'game' | 'music' | 'navg' | 'pois' | 'thief' | 'vehicle';
 
-  export type AreaTarget = 'cone' | 'cube' | 'cylinder' | 'line' | 'radius' | 'sphere' | 'square' | 'wall';
-  export type TargetType = AreaTarget | 'ally' | 'creature' | 'enemy' | 'none' | 'object' | 'self' | 'space';
+  type AreaTarget = 'cone' | 'cube' | 'cylinder' | 'line' | 'radius' | 'sphere' | 'square' | 'wall';
+  type TargetType = AreaTarget | 'ally' | 'creature' | 'enemy' | 'none' | 'object' | 'self' | 'space';
 
-  export type DurationType =
+  type DurationType =
     | 'days'
     | 'hours'
     | 'instantaneous'
@@ -189,9 +136,9 @@ declare namespace DND5e {
     | 'turns'
     | 'years';
 
-  export type WeaponType = 'simpleM' | 'martialM' | 'simpleR' | 'martialR' | 'natural' | 'improv' | 'siege';
+  type WeaponType = 'simpleM' | 'martialM' | 'simpleR' | 'martialR' | 'natural' | 'improv' | 'siege';
 
-  export interface Skill {
+  interface Skill {
     value: number;
     ability: DND5e.AbilityType;
     bonus: number;
@@ -201,7 +148,7 @@ declare namespace DND5e {
     total: number;
   }
 
-  export type SkillType =
+  type SkillType =
     | 'acr'
     | 'ani'
     | 'arc'
@@ -221,22 +168,22 @@ declare namespace DND5e {
     | 'ste'
     | 'sur';
 
-  export type AbilityBonus = {
+  type AbilityBonus = {
     check: string;
     save: string;
     skill: string;
   };
 
-  export type AttackBonus = {
+  type AttackBonus = {
     attack: string;
     damage: string;
   };
 
-  export type SaveBonus = {
+  type SaveBonus = {
     dc: number;
   };
 
-  export interface Ability {
+  interface Ability {
     value: number;
     proficient: number;
     mod: number;
@@ -244,41 +191,32 @@ declare namespace DND5e {
     prof: number;
   }
 
-  export type MovementType = 'burrow' | 'climb' | 'fly' | 'swim' | 'walk' | 'hover';
+  type MovementType = 'burrow' | 'climb' | 'fly' | 'swim' | 'walk' | 'hover';
 
-  export type Senses = 'darkvision' | 'blindsense' | 'tremorsense' | 'truesight' | 'special';
+  type Senses = 'darkvision' | 'blindsense' | 'tremorsense' | 'truesight' | 'special';
 
-  export type Currency = 'cp' | 'sp' | 'gp' | 'ep' | 'pp';
+  type Currency = 'cp' | 'sp' | 'gp' | 'ep' | 'pp';
 
-  export type SpellSchool = 'abj' | 'con' | 'div' | 'enc' | 'evo' | 'ill' | 'nec' | 'trs';
-  export type Preparation = 'prepared' | 'pact' | 'always' | 'atwill' | 'innate';
+  type SpellSchool = 'abj' | 'con' | 'div' | 'enc' | 'evo' | 'ill' | 'nec' | 'trs';
+  type Preparation = 'prepared' | 'pact' | 'always' | 'atwill' | 'innate';
 
-  export type SpellLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-  export type SpellType = `spell${SpellLevel}` | 'pact';
+  type SpellLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  type SpellType = `spell${SpellLevel}` | 'pact';
 
-  export type Resources = 'primary' | 'secondary' | 'tertiary';
+  type Resources = 'primary' | 'secondary' | 'tertiary';
 
-  export type ConsumeType = 'ammo' | 'attribute' | 'material' | 'charges';
-  export type ConsumableType = 'ammo' | 'potion' | 'poison' | 'food' | 'scroll' | 'wand' | 'rod' | 'trinket';
-  export type ConsumeTarget = string;
+  type ConsumeType = 'ammo' | 'attribute' | 'material' | 'charges';
+  type ConsumableType = 'ammo' | 'potion' | 'poison' | 'food' | 'scroll' | 'wand' | 'rod' | 'trinket';
+  type ConsumeTarget = string;
 
-  export type ArmorType =
-    | 'light'
-    | 'medium'
-    | 'heavy'
-    | 'bonus'
-    | 'natural'
-    | 'shield'
-    | 'clothing'
-    | 'trinket'
-    | 'vehicle';
+  type ArmorType = 'light' | 'medium' | 'heavy' | 'bonus' | 'natural' | 'shield' | 'clothing' | 'trinket' | 'vehicle';
 
-  export type ArmorProficiencies = 'lgt' | 'med' | 'hvy' | 'shl';
+  type ArmorProficiencies = 'lgt' | 'med' | 'hvy' | 'shl';
 
-  export type Size = 'grg' | 'huge' | 'lg' | 'med' | 'sm' | 'tiny';
-  export type Alignment = 'ce' | 'cg' | 'cn' | 'le' | 'lg' | 'ln' | 'ne' | 'ng' | 'tn';
+  type Size = 'grg' | 'huge' | 'lg' | 'med' | 'sm' | 'tiny';
+  type Alignment = 'ce' | 'cg' | 'cn' | 'le' | 'lg' | 'ln' | 'ne' | 'ng' | 'tn';
 
-  export type ConditionType =
+  type ConditionType =
     | 'blinded'
     | 'charmed'
     | 'deafened'
@@ -296,11 +234,11 @@ declare namespace DND5e {
     | 'stunned'
     | 'unconscious';
 
-  export type WeaponProficiency = 'sim' | 'mar';
+  type WeaponProficiency = 'sim' | 'mar';
 
-  export type TimePeriod = 'inst' | 'turn' | 'round' | 'minute' | 'hour' | 'day' | 'month' | 'year' | 'perm' | 'spec';
+  type TimePeriod = 'inst' | 'turn' | 'round' | 'minute' | 'hour' | 'day' | 'month' | 'year' | 'perm' | 'spec';
 
-  export type AbilityActivationType =
+  type AbilityActivationType =
     | 'none'
     | 'action'
     | 'bonus'
@@ -313,13 +251,13 @@ declare namespace DND5e {
     | 'lair'
     | 'crew';
 
-  export type UsePeriod = 'sr' | 'lr' | 'day' | 'charges';
-  export type Unit = 'ft' | 'mi';
+  type UsePeriod = 'sr' | 'lr' | 'day' | 'charges';
+  type Unit = 'ft' | 'mi';
 
-  export type SpellcasterProgression = 'none' | 'full' | 'half' | 'third' | 'pact' | 'artificer';
-  export type SpellScaling = 'none' | 'cantrip' | 'level';
+  type SpellcasterProgression = 'none' | 'full' | 'half' | 'third' | 'pact' | 'artificer';
+  type SpellScaling = 'none' | 'cantrip' | 'level';
 
-  export type WeaponProperty =
+  type WeaponProperty =
     | 'ada'
     | 'amm'
     | 'fin'
@@ -338,9 +276,9 @@ declare namespace DND5e {
     | 'two'
     | 'ver';
 
-  export type SpellComponent = 'V' | 'S' | 'M';
+  type SpellComponent = 'V' | 'S' | 'M';
 
-  export type PolymorphSetting =
+  type PolymorphSetting =
     | 'keepPhysical'
     | 'keepMental'
     | 'keepSaves'
@@ -354,7 +292,7 @@ declare namespace DND5e {
     | 'keepBio'
     | 'keepVision';
 
-  export type Language =
+  type Language =
     | 'common'
     | 'aarakocra'
     | 'abyssal'
@@ -381,7 +319,7 @@ declare namespace DND5e {
     | 'cant'
     | 'undercommon';
 
-  export type CharacterFlagArr = [
+  type CharacterFlagArr = [
     'diamondSoul',
     'elvenAccuracy',
     'halflingLucky',
@@ -396,11 +334,11 @@ declare namespace DND5e {
     'spellCriticalThreshold',
     'meleeCriticalDamageDice'
   ];
-  export type CharacterFlag = CharacterFlagArr[number];
+  type CharacterFlag = CharacterFlagArr[number];
 
-  export type Segment = { ray: { dx: number; dy: number } };
+  type Segment = { ray: { dx: number; dy: number } };
 
-  export type Subclasses = {
+  type Subclasses = {
     barbarian: [
       'path-of-the-ancestral-guardian',
       'path-of-the-battlerager',
@@ -493,9 +431,14 @@ declare namespace DND5e {
       'school-of-war-magic'
     ];
   };
-  export type Class = keyof Subclasses;
+  type Class = keyof Subclasses;
 
-  export type RollMode = 'roll' | 'gmroll' | 'blindroll' | 'selfroll';
+  type RollMode = 'roll' | 'gmroll' | 'blindroll' | 'selfroll';
 }
 
-export default DND5e;
+interface DND5E {
+  config: {
+    abilityAbbreviations: any;
+    abilityActivationTypes: any;
+  };
+}

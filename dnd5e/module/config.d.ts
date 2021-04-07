@@ -1,9 +1,3 @@
-import '@league-of-foundry-developers/foundry-vtt-types';
-
-import { ClassFeatures } from './classFeatures';
-import type DND5e from '../dnd5e';
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 declare interface DND5e {
   // ASCII Artwork
   ASCII: string;
