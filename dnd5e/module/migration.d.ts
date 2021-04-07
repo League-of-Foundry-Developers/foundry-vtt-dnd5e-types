@@ -5,7 +5,7 @@ import Item5e from './item/entity';
 
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
- * @return {Promise}      A Promise which resolves once the migration is completed
+ * @returns A Promise which resolves once the migration is completed
  */
 export declare function migrateWorld(): Promise<void>;
 
@@ -13,8 +13,7 @@ export declare function migrateWorld(): Promise<void>;
 
 /**
  * Apply migration rules to all Entities within a single Compendium pack
- * @param pack
- * @return {Promise}
+ * @param pack - The compendium to migrate
  */
 export declare function migrateCompendium(pack: Compendium): Promise<void>;
 
@@ -25,8 +24,8 @@ export declare function migrateCompendium(pack: Compendium): Promise<void>;
 /**
  * Migrate a single Actor entity to incorporate latest data model changes
  * Return an Object of updateData to be applied
- * @param {object} actor    The actor data object to update
- * @return {Object}         The updateData to apply
+ * @param actor - The actor data object to update
+ * @returns The updateData to apply
  */
 export declare function migrateActorData(actor: Actor5e): Promise<Record<string, unknown>>;
 
@@ -34,8 +33,8 @@ export declare function migrateActorData(actor: Actor5e): Promise<Record<string,
 
 /**
  * Scrub an Actor's system data, removing all keys which are not explicitly defined in the system template
- * @param {Object} actorData    The data object for an Actor
- * @return {Object}             The scrubbed Actor data
+ * @param actorData - The data object for an Actor
+ * @returns The scrubbed Actor data
  */
 export declare function cleanActorData(actor: Actor5e.Data): Actor5e.Data;
 
@@ -43,7 +42,7 @@ export declare function cleanActorData(actor: Actor5e.Data): Actor5e.Data;
 
 /**
  * Migrate a single Item entity to incorporate latest data model changes
- * @param item
+ * @param item - The item to migrate
  */
 export declare function migrateItemData(item: Item5e): Record<string, unknown>;
 
@@ -52,8 +51,8 @@ export declare function migrateItemData(item: Item5e): Record<string, unknown>;
 /**
  * Migrate a single Scene entity to incorporate changes to the data model of it's actor data overrides
  * Return an Object of updateData to be applied
- * @param {Object} scene  The Scene data to Update
- * @return {Object}       The updateData to apply
+ * @param scene - The Scene data to Update
+ * @returns The updateData to apply
  */
 export declare function migrateSceneData(scene: Scene.Data): Record<string, unknown>;
 
@@ -63,7 +62,6 @@ export declare function migrateSceneData(scene: Scene.Data): Record<string, unkn
 
 /**
  * Migrate the actor speed string to movement object
- * @private
  */
 export declare function _migrateActorMovement<UpdateData extends Record<string, unknown> = Record<string, unknown>>(
   actorData: Actor.Data,
@@ -74,7 +72,6 @@ export declare function _migrateActorMovement<UpdateData extends Record<string, 
 
 /**
  * Migrate the actor traits.senses string to attributes.senses object
- * @private
  */
 export declare function _migrateActorSenses<UpdateData extends Record<string, unknown> = Record<string, unknown>>(
   actor: Actor5e.Data
@@ -84,7 +81,6 @@ export declare function _migrateActorSenses<UpdateData extends Record<string, un
 
 /**
  * Delete the old data.attuned boolean
- * @private
  */
 export declare function _migrateItemAttunement(...args: any[]): any;
 
@@ -92,8 +88,7 @@ export declare function _migrateItemAttunement(...args: any[]): any;
 
 /**
  * A general tool to purge flags from all entities in a Compendium pack.
- * @param {Compendium} pack   The compendium pack to clean
- * @private
+ * @param pack - The compendium pack to clean
  */
 export declare function purgeFlags(pack: Compendium): Promise<void>;
 
@@ -108,8 +103,7 @@ declare type FilterDeprecated<Obj> = Pick<
 
 /**
  * Purge the data model of any inner objects which have been flagged as _deprecated.
- * @param {object} data   The data to clean
- * @private
+ * @param data - The data to clean
  */
 
 export declare function removeDeprecatedObjects<Obj>(data: Obj): FilterDeprecated<Obj>;

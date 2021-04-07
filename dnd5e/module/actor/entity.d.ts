@@ -10,8 +10,8 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Return the amount of experience required to gain a certain character level.
-   * @param level {Number}  The desired level
-   * @return {Number}       The XP required
+   * @param level - The desired level
+   * @returns The XP required
    */
   getLevelExp(level: number): number;
 
@@ -19,8 +19,8 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Return the amount of experience granted by killing a creature of a certain CR.
-   * @param cr {Number}     The creature's challenge rating
-   * @return {Number}       The amount of experience granted per kill
+   * @param cr - The creature's challenge rating
+   * @returns The amount of experience granted per kill
    */
   getCRExp(cr: number): number;
 
@@ -28,11 +28,11 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Return the features which a character is awarded for each class level
-   * @param {string} className        The class name being added
-   * @param {string} subclassName     The subclass of the class being added, if any
-   * @param {number} level            The number of levels in the added class
-   * @param {number} priorLevel       The previous level of the added class
-   * @return {Promise<Item5e[]>}     Array of Item5e entities
+   * @param className - The class name being added
+   * @param subclassName - The subclass of the class being added, if any
+   * @param level - The number of levels in the added class
+   * @param priorLevel - The previous level of the added class
+   * @returns Array of Item5e entities
    */
   static getClassFeatures({
     className,
@@ -50,9 +50,8 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Create additional class features in the Actor when a class item is updated.
-   * @private
    */
-  _createClassFeatures(updated: Actor5e.ClassFeatureUpdate | Actor5e.ClassFeatureUpdate[]): Promise<Item5e[]>;
+  private _createClassFeatures(updated: Actor5e.ClassFeatureUpdate | Actor5e.ClassFeatureUpdate[]): Promise<Item5e[]>;
 
   /* -------------------------------------------- */
   /*  Data Preparation Helpers                    */
@@ -74,22 +73,20 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Prepare vehicle type-specific data
-   * @param actorData
-   * @private
+   * @param actorData - The vehicle data to prepare
    */
-  _prepareVehicleData(actorData: Actor5e.Data): void;
+  private _prepareVehicleData(actorData: Actor5e.Data): void;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare skill checks.
-   * @param actorData
-   * @param bonuses Global bonus data.
-   * @param checkBonus Ability check specific bonus.
-   * @param originalSkills A transformed actor's original actor's skills.
-   * @private
+   * @param actorData - The actor data to use
+   * @param bonuses - Global bonus data.
+   * @param checkBonus - Ability check specific bonus.
+   * @param originalSkills - A transformed actor's original actor's skills.
    */
-  _prepareSkills(
+  private _prepareSkills(
     actorData: Actor5e.Data,
     bonuses: DND5e.AbilityBonus,
     checkBonus: number,
@@ -100,9 +97,8 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Prepare data related to the spell-casting capabilities of the Actor
-   * @private
    */
-  _computeSpellcastingProgression(actorData: Actor5e.Data): void;
+  private _computeSpellcastingProgression(actorData: Actor5e.Data): void;
 
   /* -------------------------------------------- */
 
@@ -111,11 +107,10 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
    *
    * Optionally include the weight of carried currency across all denominations by applying the standard rule
    * from the PHB pg. 143
-   * @param {Object} actorData      The data object for the Actor being rendered
-   * @returns {{max: number, value: number, pct: number}}  An object describing the character's encumbrance level
-   * @private
+   * @param actorData - The data object for the Actor being rendered
+   * @returns An object describing the character's encumbrance level
    */
-  _computeEncumbrance(actorData: Actor5e.Data): Actor5e.Encumbrance;
+  private _computeEncumbrance(actorData: Actor5e.Data): Actor5e.Encumbrance;
 
   /* -------------------------------------------- */
   /*  Socket Listeners and Handlers
@@ -123,11 +118,10 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * A temporary shim function which will eventually (in core fvtt version 0.8.0+) be migrated to the new abstraction layer
-   * @param itemData
-   * @param options
-   * @private
+   * @param itemData - The item data to use
+   * @param options - Options which
    */
-  _preCreateOwnedItem(itemData: Item5e.Data, options: any): void;
+  private _preCreateOwnedItem(itemData: Item5e.Data, options: any): void;
 
   /* -------------------------------------------- */
   /*  Gameplay Mechanics                          */
@@ -135,9 +129,9 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Apply a certain amount of damage or healing to the health pool for Actor
-   * @param {number} amount       An amount of damage (positive) or healing (negative) to sustain
-   * @param {number} multiplier   A multiplier which allows for resistance, vulnerability, or healing
-   * @return {Promise<Actor>}     A Promise which resolves once the damage has been applied
+   * @param amount - An amount of damage (positive) or healing (negative) to sustain
+   * @param multiplier - A multiplier which allows for resistance, vulnerability, or healing
+   * @returns A Promise which resolves once the damage has been applied
    */
   applyDamage(amount: number, multiplier: number): Promise<this>;
 
@@ -146,9 +140,9 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
   /**
    * Roll a Skill Check
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
-   * @param {string} skillId      The skill id (e.g. "ins")
-   * @param {Object} options      Options which configure how the skill check is rolled
-   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
+   * @param skillId - The skill id (e.g. "ins")
+   * @param options - Options which configure how the skill check is rolled
+   * @returns A Promise which resolves to the created Roll instance
    */
   rollSkill<Options extends Object>(skillId: string, options: Options): Promise<Roll<Options>>;
 
@@ -157,8 +151,8 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
   /**
    * Roll a generic ability test or saving throw.
    * Prompt the user for input on which variety of roll they want to do.
-   * @param {String}abilityId     The ability id (e.g. "str")
-   * @param {Object} options      Options which configure how ability tests or saving throws are rolled
+   * @param abilityId - The ability id (e.g. "str")
+   * @param options - Options which configure how ability tests or saving throws are rolled
    */
   rollAbility<Options extends Object>(abilityId: string, options: Options): void;
 
@@ -167,9 +161,9 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
   /**
    * Roll an Ability Test
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
-   * @param {String} abilityId    The ability ID (e.g. "str")
-   * @param {Object} options      Options which configure how ability tests are rolled
-   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
+   * @param abilityId - The ability ID (e.g. "str")
+   * @param options - Options which configure how ability tests are rolled
+   * @returns A Promise which resolves to the created Roll instance
    */
   rollAbilityTest<Options extends Object>(abilityId: string, options: Options): Promise<Roll<Options>>;
 
@@ -178,9 +172,9 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
   /**
    * Roll an Ability Saving Throw
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
-   * @param {String} abilityId    The ability ID (e.g. "str")
-   * @param {Object} options      Options which configure how ability tests are rolled
-   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
+   * @param abilityId - The ability ID (e.g. "str")
+   * @param options - Options which configure how ability tests are rolled
+   * @returns A Promise which resolves to the created Roll instance
    */
   rollAbilitySave<Options extends Object>(abilityId: string, options: Options): Promise<Roll<Options>>;
 
@@ -188,8 +182,8 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Perform a death saving throw, rolling a d20 plus any global save bonuses
-   * @param {Object} options        Additional options which modify the roll
-   * @return {Promise<Roll|null>}   A Promise which resolves to the Roll instance
+   * @param options - Additional options which modify the roll
+   * @returns A Promise which resolves to the Roll instance
    */
   rollDeathSave<Options extends Object>(options: Options): Promise<Roll<Options> | null>;
 
@@ -197,23 +191,22 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Roll a hit die of the appropriate type, gaining hit points equal to the die roll plus your CON modifier
-   * @param {string} [denomination]   The hit denomination of hit die to roll. Example "d8".
-   *                                  If no denomination is provided, the first available HD will be used
-   * @param {boolean} [dialog]        Show a dialog prompt for configuring the hit die roll?
-   * @return {Promise<Roll|null>}     The created Roll instance, or null if no hit die was rolled
+   * @param denomination - The hit denomination of hit die to roll. Example "d8". If no denomination is provided, the first available HD will be used
+   * @param dialog - Show a dialog prompt for configuring the hit die roll?
+   * @returns The created Roll instance, or null if no hit die was rolled
    */
-  rollHitDie(denomination: `d${number}`, { dialog }: { dialog: boolean }): Promise<Roll | null>;
+  rollHitDie(denomination?: `d${number}`, { dialog }?: { dialog: boolean }): Promise<Roll | null>;
 
   /* -------------------------------------------- */
 
   /**
    * Cause this Actor to take a Short Rest
    * During a Short Rest resources and limited item uses may be recovered
-   * @param {boolean} dialog  Present a dialog window which allows for rolling hit dice as part of the Short Rest
-   * @param {boolean} chat    Summarize the results of the rest workflow as a chat message
-   * @param {boolean} autoHD  Automatically spend Hit Dice if you are missing 3 or more hit points
-   * @param {boolean} autoHDThreshold   A number of missing hit points which would trigger an automatic HD roll
-   * @return {Promise}        A Promise which resolves once the short rest workflow has completed
+   * @param dialog - Present a dialog window which allows for rolling hit dice as part of the Short Rest
+   * @param chat - Summarize the results of the rest workflow as a chat message
+   * @param autoHD - Automatically spend Hit Dice if you are missing 3 or more hit points
+   * @param autoHDThreshold - A number of missing hit points which would trigger an automatic HD roll
+   * @returns A Promise which resolves once the short rest workflow has completed
    */
   shortRest({
     dialog,
@@ -231,10 +224,10 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Take a long rest, recovering HP, HD, resources, and spell slots
-   * @param {boolean} dialog  Present a confirmation dialog window whether or not to take a long rest
-   * @param {boolean} chat    Summarize the results of the rest workflow as a chat message
-   * @param {boolean} newDay  Whether the long rest carries over to a new day
-   * @return {Promise}        A Promise which resolves once the long rest workflow has completed
+   * @param dialog - Present a confirmation dialog window whether or not to take a long rest
+   * @param chat - Summarize the results of the rest workflow as a chat message
+   * @param newDay - Whether the long rest carries over to a new day
+   * @returns A Promise which resolves once the long rest workflow has completed
    */
   longRest({
     dialog,
@@ -251,7 +244,7 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
   /**
    * Convert all carried currency to the highest possible denomination to reduce the number of raw coins being
    * carried by an Actor.
-   * @return {Promise<Actor5e>}
+   * @returns This for chaining
    */
   convertCurrency(): Promise<this>;
 
@@ -260,38 +253,24 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
   /**
    * Transform this Actor into another one.
    *
-   * @param {Actor} target The target Actor.
-   * @param {boolean} [keepPhysical] Keep physical abilities (str, dex, con)
-   * @param {boolean} [keepMental] Keep mental abilities (int, wis, cha)
-   * @param {boolean} [keepSaves] Keep saving throw proficiencies
-   * @param {boolean} [keepSkills] Keep skill proficiencies
-   * @param {boolean} [mergeSaves] Take the maximum of the save proficiencies
-   * @param {boolean} [mergeSkills] Take the maximum of the skill proficiencies
-   * @param {boolean} [keepClass] Keep proficiency bonus
-   * @param {boolean} [keepFeats] Keep features
-   * @param {boolean} [keepSpells] Keep spells
-   * @param {boolean} [keepItems] Keep items
-   * @param {boolean} [keepBio] Keep biography
-   * @param {boolean} [keepVision] Keep vision
-   * @param {boolean} [transformTokens] Transform linked tokens too
+   * @param target - The target Actor.
+   * @param keepPhysical - Keep physical abilities (str, dex, con)
+   * @param keepMental - Keep mental abilities (int, wis, cha)
+   * @param keepSaves - Keep saving throw proficiencies
+   * @param keepSkills - Keep skill proficiencies
+   * @param mergeSaves - Take the maximum of the save proficiencies
+   * @param mergeSkills - Take the maximum of the skill proficiencies
+   * @param keepClass - Keep proficiency bonus
+   * @param keepFeats - Keep features
+   * @param keepSpells - Keep spells
+   * @param keepItems - Keep items
+   * @param keepBio - Keep biography
+   * @param keepVision - Keep vision
+   * @param transformTokens - Transform linked tokens too
    */
   transformInto(
     target: Actor,
-    {
-      keepPhysical,
-      keepMental,
-      keepSaves,
-      keepSkills,
-      mergeSaves,
-      mergeSkills,
-      keepClass,
-      keepFeats,
-      keepSpells,
-      keepItems,
-      keepBio,
-      keepVision,
-      transformTokens
-    }: Record<DND5e.PolymorphSetting | 'transformTokens', boolean>
+    options: Actor5e.TransformOptions
   ): ReturnType<Scene['updateEmbeddedEntity']> | undefined;
 
   /* -------------------------------------------- */
@@ -307,8 +286,8 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Add additional system-specific sidebar directory context menu options for Actor entities
-   * @param {jQuery} html         The sidebar HTML
-   * @param {Array} entryOptions  The default array of context menu options
+   * @param html-The sidebar HTML
+   * @param entryOptions-The default array of context menu options
    */
   static addDirectoryContextOptions<Options extends Array<any>>(html: JQuery, entryOptions: Options[]): void;
 
@@ -325,8 +304,8 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
 
   /**
    * Cast a Spell, consuming a spell slot of a certain level
-   * @param {Item5e} item   The spell being cast by the actor
-   * @param {Event} event   The originating user interaction which triggered the cast
+   * @param item-The spell being cast by the actor
+   * @param event-The originating user interaction which triggered the cast
    * @deprecated since dnd5e 1.2.0
    */
   useSpell(item: Item5e, { configureDialog }: { configureDialog: boolean }): Promise<Roll>;
@@ -340,6 +319,8 @@ declare namespace Actor5e {
       levels?: number;
     };
   };
+
+  export type TransformOptions = Record<DND5e.PolymorphSetting | 'transformTokens', boolean>;
 
   export type Encumbrance = {
     value: number;

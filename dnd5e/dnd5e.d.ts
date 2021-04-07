@@ -30,6 +30,101 @@ import type * as dice from './module/dice';
 import type * as macros from './module/macros';
 import type * as migrations from './module/migration';
 
+declare global {
+  export interface Game {
+    dnd5e: {
+      applications: {
+        AbilityUseDialog: AbilityUseDialog;
+        ActorSheetFlags: ActorSheetFlags;
+        ActorSheet5eCharacter: ActorSheet5eCharacter;
+        ActorSheet5eNPC: ActorSheet5eNPC;
+        ActorSheet5eVehicle: ActorSheet5eVehicle;
+        ItemSheet5e: ItemSheet5e;
+        ShortRestDialog: ShortRestDialog;
+        TraitSelector: TraitSelector;
+        ActorMovementConfig: ActorMovementConfig;
+      };
+      canvas: {
+        AbilityTemplate: AbilityTemplate;
+      };
+      config: DND5e;
+      dice: typeof dice;
+      entities: {
+        Actor5e: Actor5e;
+        Item5e: Item5e;
+      };
+      macros: typeof macros;
+      migrations: typeof migrations;
+      rollItemMacro: typeof macros.rollItemMacro;
+    };
+
+    CONFIG: {
+      DND5E: DND5e;
+      Actor: {
+        entityClass: Actor5e;
+        sheetClasses: {
+          character: {
+            'dnd5e.ActorSheet5eCharacter': {
+              id: 'dnd5e.ActorSheet5eCharacter';
+              default: boolean;
+              cls: ActorSheet5eCharacter;
+              label: string;
+            };
+          };
+          npc: {
+            'dnd5e.ActorSheet5eNPC': {
+              id: 'dnd5e.ActorSheet5eNPC';
+              default: boolean;
+              cls: ActorSheet5eNPC;
+              label: string;
+            };
+          };
+          vehicle: {
+            'dnd5e.ActorSheet5eVehicle': {
+              id: 'dnd5e.ActorSheet5eVehicle';
+              default: boolean;
+              cls: ActorSheet5eVehicle;
+              label: string;
+            };
+          };
+        };
+      };
+
+      Item: {
+        entityClass: Item5e;
+      };
+
+      time: {
+        roundTime: number;
+      };
+
+      MeasuredTemplate: {
+        defaults: {
+          angle: number;
+        };
+      };
+
+      Combat: {
+        initiative: {
+          formula: string;
+        };
+      };
+    };
+
+    Combat: {
+      _getInitiativeFormula: typeof _getInitiativeFormula;
+    };
+
+    SquareGrid: {
+      measureDistances: typeof measureDistances;
+    };
+
+    Token: {
+      getBarAttribute: typeof getBarAttribute;
+    };
+  }
+}
+
 declare namespace DND5e {
   export type PhysicalAbility = 'str' | 'dex' | 'con';
   export type MentalAbility = 'int' | 'wis' | 'cha';
@@ -401,101 +496,6 @@ declare namespace DND5e {
   export type Class = keyof Subclasses;
 
   export type RollMode = 'roll' | 'gmroll' | 'blindroll' | 'selfroll';
-}
-
-declare global {
-  export interface Game {
-    dnd5e: {
-      applications: {
-        AbilityUseDialog: AbilityUseDialog;
-        ActorSheetFlags: ActorSheetFlags;
-        ActorSheet5eCharacter: ActorSheet5eCharacter;
-        ActorSheet5eNPC: ActorSheet5eNPC;
-        ActorSheet5eVehicle: ActorSheet5eVehicle;
-        ItemSheet5e: ItemSheet5e;
-        ShortRestDialog: ShortRestDialog;
-        TraitSelector: TraitSelector;
-        ActorMovementConfig: ActorMovementConfig;
-      };
-      canvas: {
-        AbilityTemplate: AbilityTemplate;
-      };
-      config: DND5e;
-      dice: typeof dice;
-      entities: {
-        Actor5e: Actor5e;
-        Item5e: Item5e;
-      };
-      macros: typeof macros;
-      migrations: typeof migrations;
-      rollItemMacro: typeof macros.rollItemMacro;
-    };
-
-    CONFIG: {
-      DND5E: DND5e;
-      Actor: {
-        entityClass: Actor5e;
-        sheetClasses: {
-          character: {
-            'dnd5e.ActorSheet5eCharacter': {
-              id: 'dnd5e.ActorSheet5eCharacter';
-              default: boolean;
-              cls: ActorSheet5eCharacter;
-              label: string;
-            };
-          };
-          npc: {
-            'dnd5e.ActorSheet5eNPC': {
-              id: 'dnd5e.ActorSheet5eNPC';
-              default: boolean;
-              cls: ActorSheet5eNPC;
-              label: string;
-            };
-          };
-          vehicle: {
-            'dnd5e.ActorSheet5eVehicle': {
-              id: 'dnd5e.ActorSheet5eVehicle';
-              default: boolean;
-              cls: ActorSheet5eVehicle;
-              label: string;
-            };
-          };
-        };
-      };
-
-      Item: {
-        entityClass: Item5e;
-      };
-
-      time: {
-        roundTime: number;
-      };
-
-      MeasuredTemplate: {
-        defaults: {
-          angle: number;
-        };
-      };
-
-      Combat: {
-        initiative: {
-          formula: string;
-        };
-      };
-    };
-
-    Combat: {
-      _getInitiativeFormula: typeof _getInitiativeFormula;
-    };
-
-    SquareGrid: {
-      measureDistances: typeof measureDistances;
-    };
-
-    Token: {
-      getBarAttribute: typeof getBarAttribute;
-    };
-  }
 }
 
 export default DND5e;

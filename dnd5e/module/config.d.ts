@@ -10,7 +10,6 @@ declare interface DND5e {
 
   /**
    * The set of Ability Scores used within the system
-   * @type {Object}
    */
   abilities: Record<DND5e.AbilityType, string>;
   abilityAbbreviations: Record<DND5e.AbilityType, string>;
@@ -19,7 +18,6 @@ declare interface DND5e {
 
   /**
    * Character alignment options
-   * @type {Object}
    */
   alignments: Record<DND5e.Alignment, string>;
 
@@ -27,7 +25,6 @@ declare interface DND5e {
 
   /**
    * An enumeration of item attunement types
-   * @enum {number}
    */
   attunementTypes: {
     NONE: 0;
@@ -37,7 +34,6 @@ declare interface DND5e {
 
   /**
    * An enumeration of item attunement states
-   * @type {{"0": string, "1": string, "2": string}}
    */
   attunements: Record<DND5e['attunementTypes'][keyof DND5e['attunementTypes']], string>;
 
@@ -49,7 +45,6 @@ declare interface DND5e {
 
   /**
    * This Object defines the various lengths of time which can occur
-   * @type {Object}
    */
   timePeriods: Record<DND5e.TimePeriod, String>;
 
@@ -57,7 +52,6 @@ declare interface DND5e {
 
   /**
    * This describes the ways that an ability can be activated
-   * @type {Object}
    */
   abilityActivationTypes: Record<DND5e.AbilityActivationType, string>;
 
@@ -75,7 +69,6 @@ declare interface DND5e {
 
   /**
    * Classification types for item action types
-   * @type {Object}
    */
   itemActionTypes: Record<DND5e.ActionType, string>;
 
@@ -89,7 +82,6 @@ declare interface DND5e {
 
   /**
    * Enumerate the lengths of time over which an item can have limited use ability
-   * @type {Object}
    */
   limitedUsePeriods: Record<DND5e.UsePeriod, string>;
 
@@ -97,7 +89,6 @@ declare interface DND5e {
 
   /**
    * The set of equipment types for armor, clothing, and other objects which can ber worn by the character
-   * @type {Object}
    */
   equipmentTypes: Record<DND5e.ArmorType, string>;
 
@@ -105,7 +96,6 @@ declare interface DND5e {
 
   /**
    * The set of Armor Proficiencies which a character may have
-   * @type {Object}
    */
   armorProficiencies: Record<DND5e.ArmorProficiencies, string>;
 
@@ -113,7 +103,6 @@ declare interface DND5e {
 
   /**
    * Enumerate the valid consumable types which are recognized by the system
-   * @type {Object}
    */
   comsumableTypes: Record<DND5e.ConsumableType, string>;
 
@@ -121,13 +110,11 @@ declare interface DND5e {
 
   /**
    * The valid currency denominations supported by the 5e system
-   * @type {Object}
    */
   currencies: Record<DND5e.Currency, string>;
 
   /**
    * Define the upwards-conversion rules for registered currency types
-   * @type {{string, object}}
    */
   currencyConversion: Record<DND5e.Currency, { into: DND5e.Currency; each: number }>;
 
@@ -144,21 +131,18 @@ declare interface DND5e {
   /**
    * The valid units of measure for movement distances in the game system.
    * By default this uses the imperial units of feet and miles.
-   * @type {Object<string,string>}
    */
   movementTypes: Record<DND5e.MovementType, string>;
 
   /**
    * The valid units of measure for movement distances in the game system.
    * By default this uses the imperial units of feet and miles.
-   * @type {Object<string,string>}
    */
   movementUnits: Record<DND5e.Unit, string>;
 
   /**
    * The valid units of measure for the range of an action or effect.
    * This object automatically includes the movement units from DND5E.movementUnits
-   * @type {Object<string,string>}
    */
   distanceUnits: Record<DND5e.DistanceUnit, string> & DND5e['movementUnits'];
 
@@ -166,7 +150,6 @@ declare interface DND5e {
 
   /**
    * Configure aspects of encumbrance calculation so that it could be configured by modules
-   * @type {Object}
    */
   encumbrance: {
     currencyPerWeight: number;
@@ -178,7 +161,6 @@ declare interface DND5e {
 
   /**
    * This Object defines the types of single or area targets which can be applied
-   * @type {Object}
    */
   targetTypes: Record<DND5e.TargetType, string>;
 
@@ -187,7 +169,6 @@ declare interface DND5e {
   /**
    * Map the subset of target types which produce a template area of effect
    * The keys are DND5E target types and the values are MeasuredTemplate shape types
-   * @type {Object}
    */
   areaTargetTypes: Record<DND5e.AreaTarget, string>;
 
@@ -203,7 +184,6 @@ declare interface DND5e {
 
   /**
    * Enumerate the denominations of hit dice which can apply to classes
-   * @type {Array.<string>}
    */
   hitDieTypes: `d${string}`[];
 
@@ -211,7 +191,6 @@ declare interface DND5e {
 
   /**
    * The set of possible sensory perception types which an Actor may have
-   * @type {object}
    */
   senses: Record<DND5e.Senses, string>;
 
@@ -219,7 +198,6 @@ declare interface DND5e {
 
   /**
    * The set of skill which can be trained
-   * @type {Object}
    */
   skills: Record<DND5e.SkillType, string>;
 
@@ -233,7 +211,6 @@ declare interface DND5e {
 
   /**
    * The available choices for how spell damage scaling may be computed
-   * @type {Object}
    */
   spellScalingModes: Record<DND5e.SpellScaling, string>;
 
@@ -241,7 +218,6 @@ declare interface DND5e {
 
   /**
    * Define the set of types which a weapon item can take
-   * @type {Object}
    */
   weaponTypes: Record<DND5e.WeaponType, string>;
 
@@ -249,7 +225,6 @@ declare interface DND5e {
 
   /**
    * Define the set of weapon property flags which can exist on a weapon
-   * @type {Object}
    */
   weaponProperties: Record<DND5e.WeaponProperty, string>;
 
@@ -268,7 +243,6 @@ declare interface DND5e {
   /**
    * Define the standard slot progression by character level.
    * The entries of this array represent the spell slot progression for a full spell-caster.
-   * @type {Array[]}
    */
   SPELL_SLOT_TABLE: number[][];
 
@@ -282,7 +256,6 @@ declare interface DND5e {
   /**
    * Skill, ability, and tool proficiency levels
    * Each level provides a proficiency multiplier
-   * @type {Object}
    */
   proficiencyLevels: Record<number, string>;
 

@@ -45,7 +45,6 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Determine which ability score modifier is used by this item
-   * @type {string|null}
    */
   get abilityMod(): string | null;
 
@@ -53,7 +52,6 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Does the Item implement an attack roll as part of its usage
-   * @type {boolean}
    */
   get hasAttack(): boolean;
 
@@ -61,7 +59,6 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Does the Item implement a damage roll as part of its usage
-   * @type {boolean}
    */
   get hasDamage(): boolean;
 
@@ -69,7 +66,6 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Does the Item implement a versatile damage roll as part of its usage
-   * @type {boolean}
    */
   get isVersatile(): boolean;
 
@@ -77,7 +73,6 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Does the item provide an amount of healing instead of conventional damage?
-   * @return {boolean}
    */
   get isHealing(): boolean;
 
@@ -85,7 +80,6 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Does the Item implement a saving throw as part of its usage
-   * @type {boolean}
    */
   get hasSave(): boolean;
 
@@ -93,7 +87,6 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Does the Item have a target
-   * @type {boolean}
    */
   get hasTarget(): boolean;
 
@@ -101,7 +94,6 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Does the Item have an area of effect target
-   * @type {boolean}
    */
   get hasAreaTarget(): boolean;
 
@@ -109,7 +101,6 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * A flag for whether this Item is limited in it's ability to be used by charges or by recharge.
-   * @type {boolean}
    */
   get hasLimitedUses(): boolean;
 
@@ -119,7 +110,6 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Update the derived spell DC for an item that requires a saving throw
-   * @returns {number|null}
    */
   getSaveDC(): number | null;
 
@@ -133,7 +123,7 @@ declare class Item5e extends Item<Item5e.Data> {
    * - item's actor's global bonuses to the given item type
    * - item's ammunition if applicable
    *
-   * @returns {Object} returns `rollData` and `parts` to be used in the item's Attack roll
+   * @returns returns `rollData` and `parts` to be used in the item's Attack roll
    */
   getAttackToHit(): { rollData: any; parts: string[] };
 
@@ -141,11 +131,11 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
-   * @param {boolean} [configureDialog]     Display a configuration dialog for the item roll, if applicable?
-   * @param {string} [rollMode]             The roll display mode with which to display (or not) the card
-   * @param {boolean} [createMessage]       Whether to automatically create a chat message (if true) or simply return
+   * @param configureDialog - Display a configuration dialog for the item roll, if applicable?
+   * @param rollMode - The roll display mode with which to display (or not) the card
+   * @param createMessage - Whether to automatically create a chat message (if true) or simply return
    *                                        the prepared chat message data (if false).
-   * @return {Promise<ChatMessage|object|void>}
+   * @returns The resulting chat message or its data.
    */
   roll({
     configureDialog,
@@ -163,8 +153,8 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Prepare an object of chat data used to display a card for the Item in the chat log
-   * @param {Object} htmlOptions    Options used by the TextEditor.enrichHTML function
-   * @return {Object}               An object of chat data to render
+   * @param htmlOptions - Options used by the TextEditor.enrichHTML function
+   * @returns An object of chat data to render
    */
   getChatData({
     secrets,
@@ -184,58 +174,51 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Prepare chat card data for equipment type items
-   * @private
    */
-  _equipmentChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _equipmentChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare chat card data for weapon type items
-   * @private
    */
-  _weaponChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _weaponChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare chat card data for consumable type items
-   * @private
    */
-  _consumableChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _consumableChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare chat card data for tool type items
-   * @private
    */
-  _toolChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _toolChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare chat card data for tool type items
-   * @private
    */
-  _lootChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _lootChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
 
   /* -------------------------------------------- */
 
   /**
    * Render a chat card for Spell type data
-   * @return {Object}
-   * @private
+   * @returns the chat card for spells
    */
-  _spellChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _spellChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): any;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare chat card data for items of the "Feat" type
-   * @private
    */
-  _featChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _featChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
 
   /* -------------------------------------------- */
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
@@ -245,8 +228,8 @@ declare class Item5e extends Item<Item5e.Data> {
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the d20Roll logic for the core implementation
    *
-   * @param {object} options        Roll options which are configured and provided to the d20Roll function
-   * @return {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
+   * @param options - Roll options which are configured and provided to the d20Roll function
+   * @returns A Promise which resolves to the created Roll instance
    */
   rollAttack: typeof d20Roll;
 
@@ -255,12 +238,12 @@ declare class Item5e extends Item<Item5e.Data> {
   /**
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the damageRoll logic for the core implementation.
-   * @param {MouseEvent} [event]    An event which triggered this roll, if any
-   * @param {boolean} [critical]    Should damage be rolled as a critical hit?
-   * @param {number} [spellLevel]   If the item is a spell, override the level for damage scaling
-   * @param {boolean} [versatile]   If the item is a weapon, roll damage using the versatile formula
-   * @param {object} [options]      Additional options passed to the damageRoll function
-   * @return {Promise<Roll>}        A Promise which resolves to the created Roll instance
+   * @param event - An event which triggered this roll, if any
+   * @param critical - Should damage be rolled as a critical hit?
+   * @param spellLevel - If the item is a spell, override the level for damage scaling
+   * @param versatile - If the item is a weapon, roll damage using the versatile formula
+   * @param options - Additional options passed to the damageRoll function
+   * @returns A Promise which resolves to the created Roll instance
    */
   rollDamage({
     event,
@@ -278,23 +261,21 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Adjust a cantrip damage formula to scale it for higher level characters and monsters
-   * @private
    */
-  _scaleCantripDamage(parts: string[], scale: string, level: number, rollData: Record<string, unknown>): void;
+  private _scaleCantripDamage(parts: string[], scale: string, level: number, rollData: Record<string, unknown>): void;
 
   /* -------------------------------------------- */
 
   /**
    * Adjust the spell damage formula to scale it for spell level up-casting
-   * @param {Array} parts         The original damage parts
-   * @param {number} baseLevel    The default spell level
-   * @param {number} spellLevel   The casted spell level
-   * @param {string} formula      The scaling formula
-   * @param {object} rollData     A data object that should be applied to the scaled damage roll
-   * @return {string[]}           The scaled roll parts
-   * @private
+   * @param parts - The original damage parts
+   * @param baseLevel - The default spell level
+   * @param spellLevel - The casted spell level
+   * @param formula - The scaling formula
+   * @param rollData - A data object that should be applied to the scaled damage roll
+   * @returns The scaled roll parts
    */
-  _scaleSpellDamage(
+  private _scaleSpellDamage(
     parts: string[],
     baseLevel: number,
     spellLevel: number,
@@ -306,14 +287,13 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Scale an array of damage parts according to a provided scaling formula and scaling multiplier
-   * @param {string[]} parts    Initial roll parts
-   * @param {string} scaling    A scaling formula
-   * @param {number} times      A number of times to apply the scaling formula
-   * @param {object} rollData   A data object that should be applied to the scaled damage roll
-   * @return {string[]}         The scaled roll parts
-   * @private
+   * @param parts - Initial roll parts
+   * @param scaling - A scaling formula
+   * @param times - A number of times to apply the scaling formula
+   * @param rollData - A data object that should be applied to the scaled damage roll
+   * @returns The scaled roll parts
    */
-  _scaleDamage(parts: string[], scaling: string, times: number, rollData: Record<string, unknown>): string[];
+  private _scaleDamage(parts: string[], scaling: string, times: number, rollData: Record<string, unknown>): string[];
 
   /* -------------------------------------------- */
 
@@ -321,7 +301,7 @@ declare class Item5e extends Item<Item5e.Data> {
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the d20Roll logic for the core implementation
    *
-   * @return {Promise<Roll>}   A Promise which resolves to the created Roll instance
+   * @returns A Promise which resolves to the created Roll instance
    */
   rollFormula({ spellLevel }?: { spellLevel: DND5e.SpellLevel }): Promise<Roll>;
 
@@ -329,7 +309,7 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Perform an ability recharge test for an item which uses the d6 recharge mechanic
-   * @return {Promise<Roll>}   A Promise which resolves to the created Roll instance
+   * @returns A Promise which resolves to the created Roll instance
    */
   rollRecharge(): Promise<Roll>;
 
@@ -337,8 +317,8 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Roll a Tool Check. Rely upon the d20Roll logic for the core implementation
-   * @prarm {Object} options   Roll configuration options provided to the d20Roll function
-   * @return {Promise<Roll>}   A Promise which resolves to the created Roll instance
+   * @param options - Roll configuration options provided to the d20Roll function
+   * @returns A Promise which resolves to the created Roll instance
    */
   rollToolCheck: typeof d20Roll;
 
@@ -350,40 +330,36 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Handle execution of a chat card action via a click event on one of the card buttons
-   * @param {Event} event       The originating click event
-   * @returns {Promise}         A promise which resolves once the handler workflow is complete
-   * @private
+   * @param event - The originating click event
+   * @returns A promise which resolves once the handler workflow is complete
    */
-  static _onChatCardAction(event: MouseEvent): Promise<void>;
+  private static _onChatCardAction(event: MouseEvent): Promise<void>;
 
   /* -------------------------------------------- */
 
   /**
    * Handle toggling the visibility of chat card content when the name is clicked
-   * @param {Event} event   The originating click event
-   * @private
+   * @param event - The originating click event
    */
-  static _onChatCardToggleContent(event: MouseEvent): void;
+  private static _onChatCardToggleContent(event: MouseEvent): void;
 
   /* -------------------------------------------- */
 
   /**
    * Get the Actor which is the author of a chat card
-   * @param {HTMLElement} card    The chat card being used
-   * @return {Actor|null}         The Actor entity or null
-   * @private
+   * @param card - The chat card being used
+   * @returns The Actor entity or null
    */
-  static _getChatCardActor(card: HTMLElement): Actor5e | null;
+  private static _getChatCardActor(card: HTMLElement): Actor5e | null;
 
   /* -------------------------------------------- */
 
   /**
    * Get the Actor which is the author of a chat card
-   * @param {HTMLElement} card    The chat card being used
-   * @return {Array.<Actor>}      An Array of Actor entities, if any
-   * @private
+   * @param card - The chat card being used
+   * @returns An Array of Actor entities, if any
    */
-  static _getChatCardTargets(card: HTMLElement): Actor5e[];
+  private static _getChatCardTargets(card: HTMLElement): Actor5e[];
 
   /* -------------------------------------------- */
   /*  Factory Methods                             */
@@ -391,11 +367,10 @@ declare class Item5e extends Item<Item5e.Data> {
 
   /**
    * Create a consumable spell scroll Item from a spell Item.
-   * @param {Item5e} spell      The spell to be made into a scroll
-   * @return {Item5e}           The created scroll consumable item
-   * @private
+   * @param spell - The spell to be made into a scroll
+   * @returns The created scroll consumable item
    */
-  static createScrollFromSpell(spell: Item5e): Promise<Item5e>;
+  private static createScrollFromSpell(spell: Item5e): Promise<Item5e>;
 }
 
 declare namespace Item5e {
