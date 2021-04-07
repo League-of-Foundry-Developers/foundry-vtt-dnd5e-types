@@ -12,7 +12,7 @@ At the moment, only 1.2.4 (0.7.9) is supported. Work on 1.3.0 (and 0.8.x) is in 
 
 ## Installation
 
-You can install foundry-vtt-dnd5e-types from the [npm registry](https://npmjs.org/). We provide distribution tags for the different supported Foundry VTT versions that have the form `dnd5e-<foundry-version>`. For example, the distribution tag for dnd5e 1.2.4 is `dnd5e-1.2.4`.
+You can install foundry-vtt-dnd5e-types from the [npm registry](https://npmjs.org/). We provide distribution tags for the different supported Foundry VTT versions that have the form `dnd5e-<system-version>`. For example, the distribution tag for dnd5e 1.2.4 is `dnd5e-1.2.4`.
 
 In order to install the desired version, run
 
