@@ -1,5 +1,3 @@
-import Item5e from './entity';
-
 /**
  * Override and extend the core ItemSheet implementation to handle specific item types
  */
@@ -59,5 +57,3 @@ declare class ItemSheet5e extends ItemSheet {
    */
   private _onConfigureClassSkills(event: MouseEvent): void;
 }
-
-export default ItemSheet5e;

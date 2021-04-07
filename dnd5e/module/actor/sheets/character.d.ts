@@ -1,12 +1,12 @@
-import Item5e from '../../item/entity';
-
-import Actor5e from '../entity';
-
-declare class ActorSheet5eCharacter extends Actor5e {
+/**
+ * An Actor sheet for player character type actors.
+ * Extends the base ActorSheet5e class.
+ */
+declare class ActorSheet5eCharacter extends ActorSheet5e {
   /**
    * Organize and classify Owned Items for Character sheets
    */
-  private _prepareItems(data: this['data']): void;
+  private _prepareItems(data: Actor5e): void;
 
   /* -------------------------------------------- */
 
@@ -58,5 +58,3 @@ declare class ActorSheet5eCharacter extends Actor5e {
    */
   private _onLongRest(event: MouseEvent): Promise<ReturnType<Actor5e['shortRest']>>;
 }
-
-export default ActorSheet5eCharacter;

@@ -1,0 +1,1 @@
+declare function preloadHandlebarsTemplates(): any;
