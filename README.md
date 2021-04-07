@@ -12,7 +12,7 @@ At the moment, only 1.2.4 (0.7.9) is supported. Work on 1.3.0 (and 0.8.x) is in 
 
 ## Installation
 
-You can install foundry-vtt-dnd5e-types from the [npm registry](https://npmjs.org/). We provide distribution tags for the different supported Foundry VTT versions that have the form `fvtt-<foundry-version>`. For example, the distribution tag for dnd5e 1.2.4 is `fvtt-1.2.4`.
+You can install foundry-vtt-dnd5e-types from the [npm registry](https://npmjs.org/). We provide distribution tags for the different supported Foundry VTT versions that have the form `dnd5e-<foundry-version>`. For example, the distribution tag for dnd5e 1.2.4 is `dnd5e-1.2.4`.
 
 In order to install the desired version, run
 
@@ -23,7 +23,7 @@ npm install --save-dev @league-of-foundry-developers/foundry-vtt-dnd5e-types@fvt
 For example, to install the type definitions for dnd5e 1.2.4, run
 
 ```sh
-npm install --save-dev @league-of-foundry-developers/foundry-vtt-dnd5e-types@fvtt-1.2.4
+npm install --save-dev @league-of-foundry-developers/foundry-vtt-dnd5e-types@dnd5e-1.2.4
 ```
 
 You can then update foundry-vtt-dnd5e-types using the regular update mechanism for npm (see [npm update](https://docs.npmjs.com/cli/v7/commands/npm-update)).
@@ -63,12 +63,6 @@ You can run type checking and linting with the following command:
 
 ```
 npm run lint
-```
-
-You can run the tests with
-
-```
-npm run test
 ```
 
 ## License

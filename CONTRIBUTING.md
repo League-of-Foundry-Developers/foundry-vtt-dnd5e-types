@@ -8,9 +8,9 @@ The following is a set of guidelines for contributing to foundry-vtt-dnd5e-types
 
 - Documentation: [README.md](README.md), [Wiki](https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/wiki)
 - Issue tracker: [Issues](https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/issues)
-- Project boards
-  - [0.7.9](https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/projects/1)
-  - [0.8.0](https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/projects/2)
+- Milestones
+  - [1.2.4](https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/milestone/1)
+  - [1.3.0](https://github.com/League-of-Foundry-Developers/foundry-vtt-dnd5e-types/milestone//2)
 - Communication: [League Discord](https://discord.gg/52DNPzqm2Z) (ask for the TypeScript related channels if you're not already in them)
 
 ## Ways of contributing
