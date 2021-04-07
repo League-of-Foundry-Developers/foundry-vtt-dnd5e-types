@@ -52,7 +52,7 @@ jobs:
           name: package.json
       - name: Publish
         run: |
-          PUBLISHED_VERSION=$(jq -r '.version' package.json)
+          export PUBLISHED_VERSION=$(jq -r '.version' package.json)
           npm publish --ignore-scripts --tag fvtt-${PUBLISHED_VERSION//-[0-9]*/}
         shell: bash
         env:
