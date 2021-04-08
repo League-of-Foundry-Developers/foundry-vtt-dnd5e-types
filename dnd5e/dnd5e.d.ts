@@ -124,18 +124,6 @@ declare namespace DND5e {
   type AreaTarget = 'cone' | 'cube' | 'cylinder' | 'line' | 'radius' | 'sphere' | 'square' | 'wall';
   type TargetType = AreaTarget | 'ally' | 'creature' | 'enemy' | 'none' | 'object' | 'self' | 'space';
 
-  type DurationType =
-    | 'days'
-    | 'hours'
-    | 'instantaneous'
-    | 'minutes'
-    | 'months'
-    | 'permanent'
-    | 'rounds'
-    | 'special'
-    | 'turns'
-    | 'years';
-
   type WeaponType = 'simpleM' | 'martialM' | 'simpleR' | 'martialR' | 'natural' | 'improv' | 'siege';
 
   interface Skill {
@@ -200,7 +188,7 @@ declare namespace DND5e {
   type SpellSchool = 'abj' | 'con' | 'div' | 'enc' | 'evo' | 'ill' | 'nec' | 'trs';
   type Preparation = 'prepared' | 'pact' | 'always' | 'atwill' | 'innate';
 
-  type SpellLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  type SpellLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   type SpellType = `spell${SpellLevel}` | 'pact';
 
   type Resources = 'primary' | 'secondary' | 'tertiary';
@@ -434,11 +422,4 @@ declare namespace DND5e {
   type Class = keyof Subclasses;
 
   type RollMode = 'roll' | 'gmroll' | 'blindroll' | 'selfroll';
-}
-
-interface DND5E {
-  config: {
-    abilityAbbreviations: any;
-    abilityActivationTypes: any;
-  };
 }
