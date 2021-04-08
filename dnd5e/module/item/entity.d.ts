@@ -1,38 +1,19 @@
-interface Labels {
-  spell: {
-    level: string;
-    school: string;
-    components: Record<DND5e.SpellComponent, string>;
-    materials: string;
-  };
-
-  feat: {
-    featType: string;
-  };
-
-  equipment: {
-    armor: string;
-  };
-
-  activation: {
-    target: string;
-    range: string;
-    duration: string;
-    recharge: string;
-  };
-
-  actionType: {
-    damage: string[];
-    damageTypes: string[];
-  };
-}
-
-type AnyLabel = Labels[keyof Labels];
+type Items5e = {
+  weapon: Item.Data<Item5e.Data.Weapon> & { type: 'weapon' };
+  equipment: Item.Data<Item5e.Data.Equipment> & { type: 'equipment' };
+  consumable: Item.Data<Item5e.Data.Consumable> & { type: 'consumable' };
+  tool: Item.Data<Item5e.Data.Tool> & { type: 'tool' };
+  loot: Item.Data<Item5e.Data.Loot> & { type: 'loot' };
+  class: Item.Data<Item5e.Data.Class> & { type: 'class' };
+  spell: Item.Data<Item5e.Data.Spell> & { type: 'spell' };
+  feat: Item.Data<Item5e.Data.Feat> & { type: 'feat' };
+  backpack: Item.Data<Item5e.Data.Backpack> & { type: 'backpack' };
+};
 
 /**
  * Override and extend the basic :class:`Item` implementation
  */
-declare class Item5e extends Item<Item5e.Data> {
+declare class Item5e<Item5eData extends Item.Data = Items5e[keyof Items5e]> extends Item<Item5eData> {
   /* -------------------------------------------- */
   /*  Item Properties                             */
   /* -------------------------------------------- */
@@ -169,35 +150,35 @@ declare class Item5e extends Item<Item5e.Data> {
   /**
    * Prepare chat card data for equipment type items
    */
-  private _equipmentChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _equipmentChatData(data: Item5e.Data.Equipment, labels: Item5e.Labels.Equipment, props: Array<any>): void;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare chat card data for weapon type items
    */
-  private _weaponChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _weaponChatData(data: Item5e.Data.Weapon, labels: Item5e.Labels.Weapon, props: Array<any>): void;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare chat card data for consumable type items
    */
-  private _consumableChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _consumableChatData(data: Item5e.Data.Consumable, labels: Item5e.Labels.Consumable, props: Array<any>): void;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare chat card data for tool type items
    */
-  private _toolChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _toolChatData(data: Item5e.Data.Tool, labels: Item5e.Labels.Tool, props: Array<any>): void;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare chat card data for tool type items
    */
-  private _lootChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _lootChatData(data: Item5e.Data.Loot, labels: Item5e.Labels.Loot, props: Array<any>): void;
 
   /* -------------------------------------------- */
 
@@ -205,14 +186,14 @@ declare class Item5e extends Item<Item5e.Data> {
    * Render a chat card for Spell type data
    * @returns the chat card for spells
    */
-  private _spellChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): any;
+  private _spellChatData(data: Item5e.Data.Spell, labels: Item5e.Labels.Spell, props: Array<any>): any;
 
   /* -------------------------------------------- */
 
   /**
    * Prepare chat card data for items of the "Feat" type
    */
-  private _featChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
+  private _featChatData(data: Item5e.Data.Feat, labels: Item5e.Labels.Feat, props: Array<any>): void;
 
   /* -------------------------------------------- */
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
@@ -398,7 +379,7 @@ declare namespace Item5e {
 
       duration: {
         value: number | null;
-        units: DND5e.DurationType | null;
+        units: DND5e.TimePeriod | null;
       };
 
       target: {
@@ -555,14 +536,59 @@ declare namespace Item5e {
     }
   }
 
-  interface Data extends Item.Data<Data.Data> {
-    data: Data.Data;
-    effects: ActiveEffect.Data[];
-    img: string;
-    name: string;
-    permission: Entity.Permission;
-    sort: number;
-    type: DND5e.ItemType;
+  namespace Labels {
+    // hasOwnProperty('activation')
+    interface Activation {
+      activation: string;
+      target: string;
+      range: string;
+      duration: string;
+      recharge: string;
+    }
+
+    interface Save {
+      save?: string;
+    }
+
+    interface Attack {
+      toHit?: string;
+    }
+
+    // hasOwnProperty('actionType')
+    interface Damage {
+      damage: string[];
+      damageTypes: string[];
+    }
+
+    type Spell = Activation &
+      Damage &
+      Save &
+      Attack & {
+        level: string;
+        school: string;
+        components: Record<DND5e.SpellComponent, string>;
+        materials: string;
+      };
+
+    type Feat = Activation &
+      Damage &
+      Save &
+      Attack & {
+        featType: string;
+      };
+
+    type Equipment = Activation &
+      Damage &
+      Attack &
+      Save & {
+        armor: string;
+      };
+
+    type Weapon = Activation & Damage & Attack & Save;
+
+    type Consumable = Activation & Damage & Attack & Save;
+    type Tool = {};
+    type Loot = {};
   }
 
   namespace Data {
@@ -594,7 +620,5 @@ declare namespace Item5e {
     type Spell = Templates.ItemDescription & Templates.ActivatedEffect & Templates.Action & Templates.Spell;
     type Feat = Templates.ItemDescription & Templates.ActivatedEffect & Templates.Action & Templates.Feat;
     type Backpack = Templates.ItemDescription & Templates.PhysicalItem & Templates.Backpack;
-
-    type Data = Weapon | Equipment | Consumable | Tool | Loot | Class | Spell | Feat | Backpack;
   }
 }

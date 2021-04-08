@@ -8,7 +8,7 @@ declare class ItemSheet5e extends ItemSheet {
    * @returns An object of potential consumption targets
    */
   private _getItemConsumptionTargets(
-    item: Item5e.Data
+    item: Item5e['data']
   ): {
     [K: string]: string;
   };
@@ -19,7 +19,7 @@ declare class ItemSheet5e extends ItemSheet {
    * Get the text item status which is shown beneath the Item type in the top-right corner of the sheet
    * @returns The item's status
    */
-  private _getItemStatus(item: Item5e.Data): string;
+  private _getItemStatus(item: Item5e['data']): string;
 
   /* -------------------------------------------- */
 
@@ -27,7 +27,7 @@ declare class ItemSheet5e extends ItemSheet {
    * Get the Array of item properties which are used in the small sidebar of the description tab
    * @returns The item properties
    */
-  private _getItemProperties(item: Item5e.Data): string[];
+  private _getItemProperties(item: Item5e['data']): string[];
 
   /* -------------------------------------------- */
 
@@ -38,7 +38,7 @@ declare class ItemSheet5e extends ItemSheet {
    * @param item - The item data
    * @returns Whether the item is mountable
    */
-  private _isItemMountable(item: Item5e.Data): boolean;
+  private _isItemMountable(item: Item5e['data']): boolean;
 
   /* -------------------------------------------- */
 

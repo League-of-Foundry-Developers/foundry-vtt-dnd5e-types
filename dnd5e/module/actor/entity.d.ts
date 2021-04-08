@@ -116,7 +116,7 @@ declare class Actor5e extends Actor<Actor5e.Data, Item5e> {
    * @param itemData - The item data to use
    * @param options - Options which
    */
-  private _preCreateOwnedItem(itemData: Item5e.Data, options: any): void;
+  private _preCreateOwnedItem(itemData: Item5e['data'], options: any): void;
 
   /* -------------------------------------------- */
   /*  Gameplay Mechanics                          */
@@ -331,7 +331,7 @@ declare namespace Actor5e {
     newDay: boolean;
   };
 
-  interface Data extends Actor.Data<Data.Data, Item5e.Data> {
+  interface Data extends Actor.Data<Data.Data, Item5e['data']> {
     folder: string;
     img: string;
     name: string;
