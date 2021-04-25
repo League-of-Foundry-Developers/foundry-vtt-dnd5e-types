@@ -351,6 +351,12 @@ declare namespace Actor5e {
         {
           value: number;
           proficient: number;
+          mod: number;
+          saveBonus: number;
+          checkBonus: number;
+          save: number | typeof NaN;
+          prof: number | typeof NaN;
+          dc: number | typeof NaN;
         }
       >;
       attributes: {
