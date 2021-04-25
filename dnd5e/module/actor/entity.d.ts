@@ -429,6 +429,7 @@ declare namespace Actor5e {
           abilities: DND5e.AbilityBonus;
           spell: DND5e.SaveBonus;
         };
+        prof: number;
       };
     }
 
