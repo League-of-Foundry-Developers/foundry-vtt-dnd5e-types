@@ -1,1 +1,1 @@
-declare function _getInitiativeFormula(combatant: any): any;
+declare function _getInitiativeFormula(): string;

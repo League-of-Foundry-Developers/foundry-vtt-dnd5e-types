@@ -7,9 +7,8 @@ module.exports = {
   parserOptions: {
     sourceType: 'module'
   },
-  plugins: ['@typescript-eslint', 'eslint-plugin-tsdoc'],
+  plugins: ['@typescript-eslint'],
   rules: {
-    'tsdoc/syntax': 'warn',
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off'
   }

@@ -1,21 +1,15 @@
 /**
  * Create a Macro from an Item drop.
  * Get an existing item macro if one exists, otherwise create a new one.
- * @param data - The dropped data
- * @param slot - The hotbar slot to use
- * @returns - whether the macro could be created
+ * @param {Object} data     The dropped data
+ * @param {number} slot     The hotbar slot to use
+ * @returns {Promise}
  */
-declare function create5eMacro(data: any, slot: number): any;
-
+declare function create5eMacro(data: Object, slot: number): Promise<any>;
 /**
  * Create a Macro from an Item drop.
  * Get an existing item macro if one exists, otherwise create a new one.
- * @param itemName - the name of the item
- * @returns The item macro
+ * @param {string} itemName
+ * @return {Promise}
  */
-declare function rollItemMacro(itemName: string): Promise<Roll>;
-
-declare type DND5eMacros = {
-  create5eMacro: typeof create5eMacro;
-  rollItemMacro: typeof rollItemMacro;
-};
+declare function rollItemMacro(itemName: string): Promise<any>;

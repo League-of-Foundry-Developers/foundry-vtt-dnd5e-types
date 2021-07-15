@@ -1,18 +1,20 @@
 /**
- * A simple form to set actor movement speeds
- * @extends {DocumentSheet}
+ * A simple form to set actor hit dice amounts
+ * @implements {DocumentSheet}
  */
-declare class ActorMovementConfig extends DocumentSheet<
-  DocumentSheet.Options,
-  DocumentSheet.Data<
-    import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs').default<
-      any,
-      any
+declare class ActorHitDiceConfig
+  extends DocumentSheet<
+    DocumentSheet.Options,
+    DocumentSheet.Data<
+      import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs').default<
+        any,
+        any
+      >,
+      DocumentSheet.Options
     >,
-    DocumentSheet.Options
-  >,
-  import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs').default<any, any>
-> {
+    import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs').default<any, any>
+  >
+  implements DocumentSheet {
   /** @override */
   get defaultOptions(): import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/utils/helpers.mjs').InsertKeys<
     {
@@ -74,4 +76,10 @@ declare class ActorMovementConfig extends DocumentSheet<
     >,
     options?: Partial<DocumentSheet.Options> | undefined
   );
+  /**
+   * Rolls the hit die corresponding with the class row containing the event's target button.
+   * @param {MouseEvent} event
+   * @private
+   */
+  private _onRollHitDie;
 }

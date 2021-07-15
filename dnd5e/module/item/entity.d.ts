@@ -1,114 +1,105 @@
-interface Labels {
-  spell: {
-    level: string;
-    school: string;
-    components: Record<DND5e.SpellComponent, string>;
-    materials: string;
-  };
-
-  feat: {
-    featType: string;
-  };
-
-  equipment: {
-    armor: string;
-  };
-
-  activation: {
-    target: string;
-    range: string;
-    duration: string;
-    recharge: string;
-  };
-
-  actionType: {
-    damage: string[];
-    damageTypes: string[];
-  };
-}
-
-type AnyLabel = Labels[keyof Labels];
-
 /**
- * Override and extend the basic :class:`Item` implementation
+ * Override and extend the basic Item implementation
+ * @extends {Item}
  */
-declare class Item5e extends Item<Item5e.Data> {
-  /* -------------------------------------------- */
-  /*  Item Properties                             */
-  /* -------------------------------------------- */
-
+declare class Item5e extends Item {
+  static chatListeners(html: any): void;
+  /**
+   * Handle execution of a chat card action via a click event on one of the card buttons
+   * @param {Event} event       The originating click event
+   * @returns {Promise}         A promise which resolves once the handler workflow is complete
+   * @private
+   */
+  private static _onChatCardAction;
+  /**
+   * Handle toggling the visibility of chat card content when the name is clicked
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  private static _onChatCardToggleContent;
+  /**
+   * Get the Actor which is the author of a chat card
+   * @param {HTMLElement} card    The chat card being used
+   * @return {Actor|null}         The Actor entity or null
+   * @private
+   */
+  private static _getChatCardActor;
+  /**
+   * Get the Actor which is the author of a chat card
+   * @param {HTMLElement} card    The chat card being used
+   * @return {Actor[]}            An Array of Actor entities, if any
+   * @private
+   */
+  private static _getChatCardTargets;
+  /**
+   * Create a consumable spell scroll Item from a spell Item.
+   * @param {Item5e} spell      The spell to be made into a scroll
+   * @return {Item5e}           The created scroll consumable item
+   */
+  static createScrollFromSpell(spell: Item5e): Item5e;
   /**
    * Determine which ability score modifier is used by this item
+   * @type {string|null}
    */
   get abilityMod(): string | null;
-
-  /* -------------------------------------------- */
-
   /**
    * Does the Item implement an attack roll as part of its usage
+   * @type {boolean}
    */
   get hasAttack(): boolean;
-
-  /* -------------------------------------------- */
-
   /**
    * Does the Item implement a damage roll as part of its usage
+   * @type {boolean}
    */
   get hasDamage(): boolean;
-
-  /* -------------------------------------------- */
-
   /**
    * Does the Item implement a versatile damage roll as part of its usage
+   * @type {boolean}
    */
   get isVersatile(): boolean;
-
-  /* -------------------------------------------- */
-
   /**
    * Does the item provide an amount of healing instead of conventional damage?
+   * @return {boolean}
    */
   get isHealing(): boolean;
-
-  /* -------------------------------------------- */
-
   /**
    * Does the Item implement a saving throw as part of its usage
+   * @type {boolean}
    */
   get hasSave(): boolean;
-
-  /* -------------------------------------------- */
-
   /**
    * Does the Item have a target
+   * @type {boolean}
    */
   get hasTarget(): boolean;
-
-  /* -------------------------------------------- */
-
   /**
    * Does the Item have an area of effect target
+   * @type {boolean}
    */
   get hasAreaTarget(): boolean;
-
-  /* -------------------------------------------- */
-
   /**
    * A flag for whether this Item is limited in it's ability to be used by charges or by recharge.
+   * @type {boolean}
    */
   get hasLimitedUses(): boolean;
-
-  /* -------------------------------------------- */
-  /*	Data Preparation														*/
-  /* -------------------------------------------- */
-
+  labels: {} | undefined;
+  /**
+   * Compute item attributes which might depend on prepared actor data.
+   */
+  prepareFinalAttributes(): void;
+  /**
+   * Populate a label with the compiled and simplified damage formula
+   * based on owned item actor data. This is only used for display
+   * purposes and is not related to Item5e#rollDamage
+   *
+   * @returns {Array} array of objects with `formula` and `damageType`
+   */
+  getDerivedDamageLabel(): any[];
   /**
    * Update the derived spell DC for an item that requires a saving throw
+   * @returns {number|null}
    */
   getSaveDC(): number | null;
-
-  /* -------------------------------------------- */
-
   /**
    * Update a label to the Item detailing its total to hit bonus.
    * Sources:
@@ -117,484 +108,220 @@ declare class Item5e extends Item<Item5e.Data> {
    * - item's actor's global bonuses to the given item type
    * - item's ammunition if applicable
    *
-   * @returns returns `rollData` and `parts` to be used in the item's Attack roll
+   * @returns {Object} returns `rollData` and `parts` to be used in the item's Attack roll
    */
-  getAttackToHit(): { rollData: any; parts: string[] };
-
-  /* -------------------------------------------- */
-
+  getAttackToHit(): Object;
+  /**
+   * Populates the max uses of an item.
+   * If the item is an owned item and the `max` is not numeric, calculate based on actor data.
+   */
+  prepareMaxUses(): void;
   /**
    * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
-   * @param configureDialog - Display a configuration dialog for the item roll, if applicable?
-   * @param rollMode - The roll display mode with which to display (or not) the card
-   * @param createMessage - Whether to automatically create a chat message (if true) or simply return
+   * @param {object} [options]
+   * @param {boolean} [options.configureDialog]     Display a configuration dialog for the item roll, if applicable?
+   * @param {string} [options.rollMode]             The roll display mode with which to display (or not) the card
+   * @param {boolean} [options.createMessage]       Whether to automatically create a chat message (if true) or simply return
    *                                        the prepared chat message data (if false).
-   * @returns The resulting chat message or its data.
+   * @return {Promise<ChatMessage|object|void>}
    */
   roll({
     configureDialog,
     rollMode,
     createMessage
-  }: {
-    configureDialog?: boolean;
-    rollMode: DND5e.RollMode;
-    createMessage?: boolean;
-  }): Promise<ChatMessage | ChatMessage.Data | void>;
-
-  /* -------------------------------------------- */
-  /*  Chat Cards																	*/
-  /* -------------------------------------------- */
-
+  }?:
+    | {
+        configureDialog?: boolean | undefined;
+        rollMode?: string | undefined;
+        createMessage?: boolean | undefined;
+      }
+    | undefined): Promise<ChatMessage | object | void>;
+  /**
+   * Verify that the consumed resources used by an Item are available.
+   * Otherwise display an error and return false.
+   * @param {boolean} consumeQuantity     Consume quantity of the item if other consumption modes are not available?
+   * @param {boolean} consumeRecharge     Whether the item consumes the recharge mechanic
+   * @param {boolean} consumeResource     Whether the item consumes a limited resource
+   * @param {string|null} consumeSpellLevel The category of spell slot to consume, or null
+   * @param {boolean} consumeUsage        Whether the item consumes a limited usage
+   * @returns {object|boolean}            A set of data changes to apply when the item is used, or false
+   * @private
+   */
+  private _getUsageUpdates;
+  /**
+   * Handle update actions required when consuming an external resource
+   * @param {object} itemUpdates        An object of data updates applied to this item
+   * @param {object} actorUpdates       An object of data updates applied to the item owner (Actor)
+   * @param {object} resourceUpdates    An object of data updates applied to a different resource item (Item)
+   * @return {boolean|void}             Return false to block further progress, or return nothing to continue
+   * @private
+   */
+  private _handleConsumeResource;
+  /**
+   * Display the chat card for an Item as a Chat Message
+   * @param {object} [options]          Options which configure the display of the item chat card
+   * @param {string} options.rollMode         The message visibility mode to apply to the created card
+   * @param {boolean} [options.createMessage]   Whether to automatically create a ChatMessage entity (if true), or only return
+   *                                  the prepared message data (if false)
+   */
+  displayCard({
+    rollMode,
+    createMessage
+  }?:
+    | {
+        rollMode: string;
+        createMessage?: boolean | undefined;
+      }
+    | undefined): Promise<
+    | ChatMessage
+    | {
+        user: any;
+        type: 0;
+        content: string;
+        flavor: any;
+        speaker: import('@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes').PropertiesToSource<
+          import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/chatSpeakerData').ChatSpeakerDataProperties
+        >;
+        flags: {
+          'core.canPopout': boolean;
+        };
+      }
+    | undefined
+  >;
   /**
    * Prepare an object of chat data used to display a card for the Item in the chat log
-   * @param htmlOptions - Options used by the TextEditor.enrichHTML function
-   * @returns An object of chat data to render
+   * @param {Object} htmlOptions    Options used by the TextEditor.enrichHTML function
+   * @return {Object}               An object of chat data to render
    */
-  getChatData({
-    secrets,
-    entities,
-    links,
-    rolls,
-    rollData // TODO: _createInlineRoll
-  }?: {
-    secrets: boolean;
-    entities: boolean;
-    links: boolean;
-    rolls: boolean;
-    rollData: object;
-  }): void;
-
-  /* -------------------------------------------- */
-
+  getChatData(htmlOptions?: Object): Object;
   /**
    * Prepare chat card data for equipment type items
+   * @private
    */
-  private _equipmentChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
-
-  /* -------------------------------------------- */
-
+  private _equipmentChatData;
   /**
    * Prepare chat card data for weapon type items
+   * @private
    */
-  private _weaponChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
-
-  /* -------------------------------------------- */
-
+  private _weaponChatData;
   /**
    * Prepare chat card data for consumable type items
+   * @private
    */
-  private _consumableChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
-
-  /* -------------------------------------------- */
-
+  private _consumableChatData;
   /**
    * Prepare chat card data for tool type items
+   * @private
    */
-  private _toolChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
-
-  /* -------------------------------------------- */
-
+  private _toolChatData;
   /**
    * Prepare chat card data for tool type items
+   * @private
    */
-  private _lootChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
-
-  /* -------------------------------------------- */
-
+  private _lootChatData;
   /**
    * Render a chat card for Spell type data
-   * @returns the chat card for spells
+   * @return {Object}
+   * @private
    */
-  private _spellChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): any;
-
-  /* -------------------------------------------- */
-
+  private _spellChatData;
   /**
    * Prepare chat card data for items of the "Feat" type
+   * @private
    */
-  private _featChatData(data: Item5e.Data.Data, labels: AnyLabel, props: Array<any>): void;
-
-  /* -------------------------------------------- */
-  /*  Item Rolls - Attack, Damage, Saves, Checks  */
-  /* -------------------------------------------- */
-
+  private _featChatData;
   /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the d20Roll logic for the core implementation
    *
-   * @param options - Roll options which are configured and provided to the d20Roll function
-   * @returns A Promise which resolves to the created Roll instance
+   * @param {object} options        Roll options which are configured and provided to the d20Roll function
+   * @return {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
    */
-  rollAttack: typeof d20Roll;
-
-  /* -------------------------------------------- */
-
+  rollAttack(options?: object): Promise<Roll | null>;
+  _ammo: Item | undefined;
   /**
    * Place a damage roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the damageRoll logic for the core implementation.
-   * @param event - An event which triggered this roll, if any
-   * @param critical - Should damage be rolled as a critical hit?
-   * @param spellLevel - If the item is a spell, override the level for damage scaling
-   * @param versatile - If the item is a weapon, roll damage using the versatile formula
-   * @param options - Additional options passed to the damageRoll function
-   * @returns A Promise which resolves to the created Roll instance
+   * @param {object} [options]
+   * @param {MouseEvent} [options.event]    An event which triggered this roll, if any
+   * @param {boolean} [options.critical]    Should damage be rolled as a critical hit?
+   * @param {number} [options.spellLevel]   If the item is a spell, override the level for damage scaling
+   * @param {boolean} [options.versatile]   If the item is a weapon, roll damage using the versatile formula
+   * @param {object} [options.options]      Additional options passed to the damageRoll function
+   * @return {Promise<Roll>}        A Promise which resolves to the created Roll instance
    */
   rollDamage({
-    event,
     critical,
+    event,
+    spellLevel,
     versatile,
     options
-  }?: {
-    event?: MouseEvent;
-    critical?: boolean;
-    versatile?: boolean;
-    options?: Parameters<typeof damageRoll>[0];
-  }): Promise<Roll>;
-
-  /* -------------------------------------------- */
-
+  }?:
+    | {
+        event?: MouseEvent | undefined;
+        critical?: boolean | undefined;
+        spellLevel?: number | undefined;
+        versatile?: boolean | undefined;
+        options?: object | undefined;
+      }
+    | undefined): Promise<Roll>;
   /**
    * Adjust a cantrip damage formula to scale it for higher level characters and monsters
+   * @private
    */
-  private _scaleCantripDamage(parts: string[], scale: string, level: number, rollData: Record<string, unknown>): void;
-
-  /* -------------------------------------------- */
-
+  private _scaleCantripDamage;
   /**
    * Adjust the spell damage formula to scale it for spell level up-casting
-   * @param parts - The original damage parts
-   * @param baseLevel - The default spell level
-   * @param spellLevel - The casted spell level
-   * @param formula - The scaling formula
-   * @param rollData - A data object that should be applied to the scaled damage roll
-   * @returns The scaled roll parts
+   * @param {Array} parts         The original damage parts
+   * @param {number} baseLevel    The default spell level
+   * @param {number} spellLevel   The casted spell level
+   * @param {string} formula      The scaling formula
+   * @param {object} rollData     A data object that should be applied to the scaled damage roll
+   * @return {string[]}           The scaled roll parts
+   * @private
    */
-  private _scaleSpellDamage(
-    parts: string[],
-    baseLevel: number,
-    spellLevel: number,
-    formula: string,
-    rollData: Record<string, unknown>
-  ): void;
-
-  /* -------------------------------------------- */
-
+  private _scaleSpellDamage;
   /**
    * Scale an array of damage parts according to a provided scaling formula and scaling multiplier
-   * @param parts - Initial roll parts
-   * @param scaling - A scaling formula
-   * @param times - A number of times to apply the scaling formula
-   * @param rollData - A data object that should be applied to the scaled damage roll
-   * @returns The scaled roll parts
+   * @param {string[]} parts    Initial roll parts
+   * @param {string} scaling    A scaling formula
+   * @param {number} times      A number of times to apply the scaling formula
+   * @param {object} rollData   A data object that should be applied to the scaled damage roll
+   * @return {string[]}         The scaled roll parts
+   * @private
    */
-  private _scaleDamage(parts: string[], scaling: string, times: number, rollData: Record<string, unknown>): string[];
-
-  /* -------------------------------------------- */
-
+  private _scaleDamage;
   /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    * Rely upon the d20Roll logic for the core implementation
    *
-   * @returns A Promise which resolves to the created Roll instance
+   * @return {Promise<Roll>}   A Promise which resolves to the created Roll instance
    */
-  rollFormula({ spellLevel }?: { spellLevel: DND5e.SpellLevel }): Promise<Roll>;
-
-  /* -------------------------------------------- */
-
+  rollFormula(options?: {}): Promise<Roll>;
   /**
    * Perform an ability recharge test for an item which uses the d6 recharge mechanic
-   * @returns A Promise which resolves to the created Roll instance
+   * @return {Promise<Roll>}   A Promise which resolves to the created Roll instance
    */
   rollRecharge(): Promise<Roll>;
-
-  /* -------------------------------------------- */
-
   /**
    * Roll a Tool Check. Rely upon the d20Roll logic for the core implementation
-   * @param options - Roll configuration options provided to the d20Roll function
-   * @returns A Promise which resolves to the created Roll instance
+   * @prarm {Object} options   Roll configuration options provided to the d20Roll function
+   * @return {Promise<Roll>}   A Promise which resolves to the created Roll instance
    */
-  rollToolCheck: typeof d20Roll;
-
-  /* -------------------------------------------- */
-
-  static chatListeners(html: JQuery): void;
-
-  /* -------------------------------------------- */
-
+  rollToolCheck(options?: {}): Promise<Roll>;
   /**
-   * Handle execution of a chat card action via a click event on one of the card buttons
-   * @param event - The originating click event
-   * @returns A promise which resolves once the handler workflow is complete
+   * Pre-creation logic for the automatic configuration of owned equipment type Items
+   * @private
    */
-  private static _onChatCardAction(event: MouseEvent): Promise<void>;
-
-  /* -------------------------------------------- */
-
+  private _onCreateOwnedEquipment;
   /**
-   * Handle toggling the visibility of chat card content when the name is clicked
-   * @param event - The originating click event
+   * Pre-creation logic for the automatic configuration of owned spell type Items
+   * @private
    */
-  private static _onChatCardToggleContent(event: MouseEvent): void;
-
-  /* -------------------------------------------- */
-
+  private _onCreateOwnedSpell;
   /**
-   * Get the Actor which is the author of a chat card
-   * @param card - The chat card being used
-   * @returns The Actor entity or null
+   * Pre-creation logic for the automatic configuration of owned weapon type Items
+   * @private
    */
-  private static _getChatCardActor(card: HTMLElement): Actor5e | null;
-
-  /* -------------------------------------------- */
-
-  /**
-   * Get the Actor which is the author of a chat card
-   * @param card - The chat card being used
-   * @returns An Array of Actor entities, if any
-   */
-  private static _getChatCardTargets(card: HTMLElement): Actor5e[];
-
-  /* -------------------------------------------- */
-  /*  Factory Methods                             */
-  /* -------------------------------------------- */
-
-  /**
-   * Create a consumable spell scroll Item from a spell Item.
-   * @param spell - The spell to be made into a scroll
-   * @returns The created scroll consumable item
-   */
-  private static createScrollFromSpell(spell: Item5e): Promise<Item5e>;
-}
-
-declare namespace Item5e {
-  namespace Templates {
-    interface ItemDescription {
-      description: {
-        value: string;
-        chat: string;
-        unidentified: string;
-      };
-      source: string;
-    }
-
-    interface PhysicalItem {
-      quantity: number;
-      weight: number;
-      price: number;
-      attuned: boolean;
-      attunement: number;
-      equipped: boolean;
-      rarity: string;
-      identified: false;
-    }
-
-    interface ActivatedEffect {
-      activation: {
-        type: DND5e.ActivationType;
-        cost: number;
-        condition: string;
-      };
-
-      duration: {
-        value: number | null;
-        units: DND5e.DurationType | null;
-      };
-
-      target: {
-        value: number | null;
-        width: number | null;
-        units: DND5e.TargetUnitType | '';
-        type: DND5e.TargetType | '';
-      };
-
-      range: {
-        value: number | null;
-        long: number | null;
-        units: DND5e.TargetUnitType | '';
-      };
-
-      uses: {
-        value: number;
-        max: number;
-        per: number | null;
-      };
-
-      consume: {
-        type: DND5e.ConsumeType;
-        target: DND5e.ConsumeTarget | null;
-        amount: number | null;
-      };
-    }
-
-    interface Action {
-      ability: DND5e.AbilityType | null;
-      actionType: DND5e.ActionType | null;
-      attackBonus: number;
-      chatFlavor: string;
-      critical: boolean | null;
-      damage: {
-        parts: [string, DND5e.DamageType | 'none'][];
-        versatile: string;
-      };
-      formula: string;
-      save: {
-        ability: DND5e.AbilityType;
-        dc: number | null;
-        scaling: string;
-      };
-    }
-
-    interface Mountable {
-      armor: {
-        value: number;
-      };
-      hp: {
-        value: number;
-        max: number;
-        dt: number | null;
-        conditions: string;
-      };
-    }
-
-    interface Weapon {
-      weaponType: string;
-      properties: {};
-      proficient: boolean;
-    }
-
-    interface Equipment {
-      armor: {
-        type: DND5e.ArmorType;
-        value: number;
-        dex: number | null;
-      };
-
-      speed: {
-        value: number | null;
-        conditions: string;
-      };
-
-      strength: number;
-      stealth: boolean;
-      proficient: boolean;
-    }
-
-    interface Consumable {
-      consumableType: string;
-      uses: {
-        autoDestroy: boolean;
-      };
-    }
-
-    interface Tool {
-      ability: DND5e.Ability;
-      chatFlavor: string;
-      proficient: number;
-    }
-
-    interface Class<Choices extends DND5e.SkillType[] = DND5e.SkillType[]> {
-      levels: number;
-      subclass: string;
-      hitDice: `d${number}`;
-      hitDiceUsed: number;
-      skills: {
-        number: number;
-        choices: Choices;
-
-        // value is a subset of choices
-        value: Choices;
-      };
-    }
-
-    interface Spell {
-      level: DND5e.SpellLevel;
-      school: DND5e.SpellSchool;
-      components: {
-        value: string;
-        vocal: boolean;
-        somatic: boolean;
-        material: boolean;
-        ritual: boolean;
-        concentration: boolean;
-      };
-
-      materials: {
-        value: string;
-        consumed: boolean;
-        cost: number;
-        supply: number;
-      };
-
-      preparation: {
-        mode: DND5e.Preparation;
-        prepared: boolean;
-      };
-
-      scaling: {
-        mode: string;
-        formula: string | null;
-      };
-    }
-
-    interface Feat {
-      requirements: string;
-      recharge: {
-        value: number | string;
-        charged: boolean;
-      };
-    }
-
-    interface Backpack {
-      capacity: {
-        type: string;
-        value: number;
-        weightless: boolean;
-      };
-      currency: Record<DND5e.Currency, number>;
-    }
-  }
-
-  interface Data extends Item.Data<Data.Data> {
-    data: Data.Data;
-    effects: ActiveEffect.Data[];
-    img: string;
-    name: string;
-    permission: Entity.Permission;
-    sort: number;
-    type: DND5e.ItemType;
-  }
-
-  namespace Data {
-    type Weapon = Templates.ItemDescription &
-      Templates.PhysicalItem &
-      Templates.ActivatedEffect &
-      Templates.Action &
-      Templates.Mountable &
-      Templates.Weapon;
-
-    type Equipment = Templates.ItemDescription &
-      Templates.PhysicalItem &
-      Templates.ActivatedEffect &
-      Templates.Action &
-      Templates.Mountable &
-      Templates.Equipment;
-
-    type Consumable = Templates.ItemDescription &
-      Templates.PhysicalItem &
-      Templates.ActivatedEffect &
-      Templates.Action &
-      Templates.Consumable;
-
-    type Tool = Templates.ItemDescription & Templates.PhysicalItem & Templates.Tool;
-    type Loot = Templates.ItemDescription & Templates.PhysicalItem;
-    type Class<Choices extends DND5e.SkillType[] = DND5e.SkillType[]> = Templates.ItemDescription &
-      Templates.Class<Choices>;
-
-    type Spell = Templates.ItemDescription & Templates.ActivatedEffect & Templates.Action & Templates.Spell;
-    type Feat = Templates.ItemDescription & Templates.ActivatedEffect & Templates.Action & Templates.Feat;
-    type Backpack = Templates.ItemDescription & Templates.PhysicalItem & Templates.Backpack;
-
-    type Data = Weapon | Equipment | Consumable | Tool | Loot | Class | Spell | Feat | Backpack;
-  }
+  private _onCreateOwnedWeapon;
 }

@@ -1,1 +1,1 @@
-declare function preloadHandlebarsTemplates(): any;
+declare function preloadHandlebarsTemplates(): Promise<any>;

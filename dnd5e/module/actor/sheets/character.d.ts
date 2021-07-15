@@ -1,60 +1,84 @@
 /**
  * An Actor sheet for player character type actors.
  * Extends the base ActorSheet5e class.
+ * @type {ActorSheet5e}
  */
 declare class ActorSheet5eCharacter extends ActorSheet5e {
   /**
-   * Organize and classify Owned Items for Character sheets
+   * Define default rendering options for the NPC sheet
    */
-  private _prepareItems(data: Actor5e): void;
-
-  /* -------------------------------------------- */
-
+  static get defaultOptions(): import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/utils/helpers.mjs').InsertKeys<
+    {
+      token?: TokenConfig<TokenConfig.Options> | null | undefined;
+      classes: string[];
+      template: string;
+      viewPermission: 0 | 2 | 1 | 3;
+      baseApplication: string | null;
+      width: number;
+      height: number;
+      top: number | null;
+      left: number | null;
+      scale?: number | null | undefined;
+      popOut: boolean;
+      minimizable: boolean;
+      resizable: boolean;
+      id: string;
+      title: string;
+      scrollY: string[];
+      tabs: {
+        navSelector: string;
+        contentSelector: string;
+        initial: string;
+      }[];
+      dragDrop: Omit<DragDrop.Options, 'permissions' | 'callbacks'>[];
+      filters: Omit<SearchFilter.Options, 'callback'>[];
+      closeOnSubmit: boolean;
+      submitOnChange: boolean;
+      submitOnClose: boolean;
+      editable: boolean;
+    },
+    import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/utils/helpers.mjs').OmitByValue<
+      {
+        classes: string[];
+        width: number;
+        height: number;
+      },
+      never
+    >
+  >;
+  /**
+   * Organize and classify Owned Items for Character sheets
+   * @private
+   */
+  private _prepareItems;
   /**
    * A helper method to establish the displayed preparation state for an item
-   * @param item - Item to toggle the state of
+   * @param {Item} item
+   * @private
    */
-  private _prepareItemToggleState(item: Item5e): void;
-
-  /* -------------------------------------------- */
-  /*  Event Listeners and Handlers
-  /* -------------------------------------------- */
-
-  /**
-   * Activate event listeners using the prepared sheet HTML
-   * @param html - The prepared HTML object ready to be rendered into the DOM
-   */
-  activateListeners(html: JQuery): void;
-
-  /* -------------------------------------------- */
-
+  private _prepareItemToggleState;
   /**
    * Handle mouse click events for character sheet actions
-   * @param event - The originating click event
+   * @param {MouseEvent} event    The originating click event
+   * @private
    */
-  private _onSheetAction(event: MouseEvent): Roll;
-
-  /* -------------------------------------------- */
-
+  private _onSheetAction;
   /**
    * Handle toggling the state of an Owned Item within the Actor
-   * @param event - The triggering click event
+   * @param {Event} event   The triggering click event
+   * @private
    */
-  private _onToggleItem(event: MouseEvent): ReturnType<Item5e['update']>;
-
-  /* -------------------------------------------- */
-
+  private _onToggleItem;
   /**
    * Take a short rest, calling the relevant function on the Actor instance
-   * @param event - The triggering click event
+   * @param {Event} event   The triggering click event
+   * @private
    */
-  private _onShortRest(event: MouseEvent): Promise<ReturnType<Actor5e['longRest']>>;
-
-  /* -------------------------------------------- */
-
+  private _onShortRest;
   /**
    * Take a long rest, calling the relevant function on the Actor instance
-   * @param event - The triggering click event
+   * @param {Event} event   The triggering click event
+   * @private
    */
-  private _onLongRest(event: MouseEvent): Promise<ReturnType<Actor5e['shortRest']>>;
+  private _onLongRest;
 }
