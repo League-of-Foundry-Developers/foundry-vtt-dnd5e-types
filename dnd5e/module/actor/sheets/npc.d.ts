@@ -1,13 +1,12 @@
 /**
  * An Actor sheet for NPC type characters.
- * Extends the base ActorSheet5e class.
  * @extends {ActorSheet5e}
  */
 declare class ActorSheet5eNPC extends ActorSheet5e {
   /** @override */
   get defaultOptions(): import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/utils/helpers.mjs').InsertKeys<
     {
-      token?: TokenConfig<TokenConfig.Options> | null | undefined;
+      token?: TokenDocument | null | undefined;
       classes: string[];
       template: string;
       viewPermission: 0 | 2 | 1 | 3;
@@ -45,13 +44,19 @@ declare class ActorSheet5eNPC extends ActorSheet5e {
     >
   >;
   /**
-   * Organize Owned Items for rendering the NPC sheet
+   * Organize Owned Items for rendering the NPC sheet.
+   * @param {object} data  Copy of the actor data being prepared for displayed. *Will be mutated.*
    * @private
    */
   private _prepareItems;
   /**
-   * Handle rolling NPC health values using the provided formula
-   * @param {Event} event     The original click event
+   * Format NPC armor information into a localized string.
+   * @returns {string}  Formatted armor label.
+   */
+  getArmorLabel(): string;
+  /**
+   * Handle rolling NPC health values using the provided formula.
+   * @param {Event} event  The original click event.
    * @private
    */
   private _onRollHPFormula;

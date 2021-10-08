@@ -8,6 +8,7 @@ declare class ActorTypeConfig extends FormApplication<
   {}
 > {
   /** @inheritdoc */
+  static get defaultOptions(): never;
   constructor(object: {}, options?: Partial<FormApplication.Options> | undefined);
   /**
    * Select the custom radio button when the custom text field is focused.
@@ -15,6 +16,4 @@ declare class ActorTypeConfig extends FormApplication<
    * @private
    */
   private _onCustomFieldFocused;
-
-  _updateObject(event: Event, formData?: object | undefined): Promise<this['object']>;
 }

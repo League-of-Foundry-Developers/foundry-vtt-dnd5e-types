@@ -1,8 +1,11 @@
 /**
- * A simple form to set Actor movement speeds.
+ * A simple form to set skill configuration for a given skill.
  * @extends {DocumentSheet}
+ * @param {Actor} actor                   The Actor instance being displayed within the sheet.
+ * @param {ApplicationOptions} options    Additional application configuration options.
+ * @param {string} skillId                The skill id (e.g. "ins")
  */
-declare class ActorSensesConfig extends DocumentSheet<
+declare class ActorSkillConfig extends DocumentSheet<
   DocumentSheet.Options,
   DocumentSheet.Data<
     import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs').default<
@@ -67,11 +70,6 @@ declare class ActorSensesConfig extends DocumentSheet<
       never
     >
   >;
-  constructor(
-    object: import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs').default<
-      any,
-      any
-    >,
-    options?: Partial<DocumentSheet.Options> | undefined
-  );
+  constructor(actor: any, opts: any, skillId: any);
+  _skillId: any;
 }

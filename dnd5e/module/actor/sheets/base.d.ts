@@ -1,13 +1,13 @@
 /**
  * Extend the basic ActorSheet class to suppose system-specific logic and functionality.
- * This sheet is an Abstract layer which is not used.
+ * @abstract
  * @extends {ActorSheet}
  */
 declare class ActorSheet5e extends ActorSheet<ActorSheet.Options, ActorSheet.Data<ActorSheet.Options>> {
   /** @override */
   get defaultOptions(): import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/utils/helpers.mjs').InsertKeys<
     {
-      token?: TokenConfig<TokenConfig.Options> | null | undefined;
+      token?: TokenDocument | null | undefined;
       classes: string[];
       template: string;
       viewPermission: 0 | 2 | 1 | 3;
@@ -59,138 +59,187 @@ declare class ActorSheet5e extends ActorSheet<ActorSheet.Options, ActorSheet.Dat
    */
   _filters: Set<any>;
   /**
-   * Prepare the display of movement speed data for the Actor*
+   * Prepare the display of movement speed data for the Actor.
    * @param {object} actorData                The Actor data being prepared.
-   * @param {boolean} [largestPrimary=false]  Show the largest movement speed as "primary", otherwise show "walk"
+   * @param {boolean} [largestPrimary=false]  Show the largest movement speed as "primary", otherwise show "walk".
    * @returns {{primary: string, special: string}}
    * @private
    */
   private _getMovementSpeed;
-  _getSenses(
-    actorData: any
-  ): {
-    special: any;
-  };
   /**
-   * Prepare the data structure for traits data like languages, resistances & vulnerabilities, and proficiencies
-   * @param {object} traits   The raw traits data object from the actor data
+   * Prepare senses object for display.
+   * @param {object} actorData  Copy of actor data being prepared for display.
+   * @returns {object}          Senses grouped by key with localized and formatted string.
+   * @protected
+   */
+  protected _getSenses(actorData: object): object;
+  /**
+   * Break down all of the Active Effects affecting a given target property.
+   * @param {string} target               The data property being targeted.
+   * @returns {AttributionDescription[]}  Any active effects that modify that property.
+   * @protected
+   */
+  protected _prepareActiveEffectAttributions(target: string): any[];
+  /**
+   * Produce a list of armor class attribution objects.
+   * @param {object} data                 Actor data to determine the attributions from.
+   * @returns {AttributionDescription[]}  List of attribution descriptions.
+   * @protected
+   */
+  protected _prepareArmorClassAttribution(data: object): any[];
+  /**
+   * Prepare the data structure for traits data like languages, resistances & vulnerabilities, and proficiencies.
+   * @param {object} traits   The raw traits data object from the actor data. *Will be mutated.*
    * @private
    */
   private _prepareTraits;
   /**
-   * Insert a spell into the spellbook object when rendering the character sheet
-   * @param {Object} data     The Actor data being prepared
-   * @param {Array} spells    The spell data being prepared
+   * Insert a spell into the spellbook object when rendering the character sheet.
+   * @param {object} data      Copy of the Actor data being prepared for display.
+   * @param {object[]} spells  Spells to be included in the spellbook.
+   * @returns {object[]}       Spellbook sections in the proper order.
    * @private
    */
   private _prepareSpellbook;
   /**
-   * Determine whether an Owned Item will be shown based on the current set of filters
-   * @return {boolean}
+   * Determine whether an Owned Item will be shown based on the current set of filters.
+   * @param {object[]} items       Copies of item data to be filtered.
+   * @param {Set<string>} filters  Filters applied to the item list.
+   * @returns {object[]}           Subset of input items limited by the provided filters.
    * @private
    */
   private _filterItems;
   /**
-   * Get the font-awesome icon used to display a certain level of skill proficiency
+   * Get the font-awesome icon used to display a certain level of skill proficiency.
+   * @param {number} level  A proficiency mode defined in `CONFIG.DND5E.proficiencyLevels`.
+   * @returns {string}      HTML string for the chosen icon.
    * @private
    */
   private _getProficiencyIcon;
   /**
-   * Iinitialize Item list filters by activating the set of filters which are currently applied
+   * Initialize Item list filters by activating the set of filters which are currently applied
+   * @param {number} i  Index of the filter in the list.
+   * @param {HTML} ul   HTML object for the list item surrounding the filter.
    * @private
    */
   private _initializeFilterItemList;
   /**
    * Handle input changes to numeric form fields, allowing them to accept delta-typed inputs
-   * @param event
+   * @param {Event} event  Triggering event.
    * @private
    */
   private _onChangeInputDelta;
   /**
-   * Handle spawning the TraitSelector application which allows a checkbox of multiple trait options
-   * @param {Event} event   The click event which originated the selection
+   * Handle spawning the TraitSelector application which allows a checkbox of multiple trait options.
+   * @param {Event} event   The click event which originated the selection.
    * @private
    */
   private _onConfigMenu;
   /**
-   * Handle cycling proficiency in a Skill
-   * @param {Event} event   A click or contextmenu event which triggered the handler
+   * Handle cycling proficiency in a Skill.
+   * @param {Event} event   A click or contextmenu event which triggered the handler.
+   * @returns {Promise}     Updated data for this actor after changes are applied.
    * @private
    */
   private _onCycleSkillProficiency;
   /**
-   * Handle enabling editing for a spell slot override value
-   * @param {MouseEvent} event    The originating click event
+   * Handle enabling editing for a spell slot override value.
+   * @param {MouseEvent} event    The originating click event.
    * @private
    */
   private _onSpellSlotOverride;
   /**
-   * Change the uses amount of an Owned Item within the Actor
-   * @param {Event} event   The triggering click event
+   * Change the uses amount of an Owned Item within the Actor.
+   * @param {Event} event        The triggering click event.
+   * @returns {Promise<Item5e>}  Updated item.
    * @private
    */
   private _onUsesChange;
   /**
-   * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   * Handle rolling an item from the Actor sheet, obtaining the Item instance, and dispatching to its roll method.
+   * @param {Event} event  The triggering click event.
+   * @returns {Promise}    Results of the roll.
    * @private
    */
   private _onItemRoll;
   /**
-   * Handle attempting to recharge an item usage by rolling a recharge check
-   * @param {Event} event   The originating click event
+   * Handle attempting to recharge an item usage by rolling a recharge check.
+   * @param {Event} event      The originating click event.
+   * @returns {Promise<Roll>}  The resulting recharge roll.
    * @private
    */
   private _onItemRecharge;
   /**
-   * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   * Handle toggling and items expanded description.
+   * @param {Event} event   Triggering event.
    * @private
    */
   private _onItemSummary;
   /**
-   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
-   * @param {Event} event   The originating click event
+   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset.
+   * @param {Event} event          The originating click event.
+   * @returns {Promise<Item5e[]>}  The newly created item.
    * @private
    */
   private _onItemCreate;
   /**
-   * Handle editing an existing Owned Item for the Actor
-   * @param {Event} event   The originating click event
+   * Handle editing an existing Owned Item for the Actor.
+   * @param {Event} event    The originating click event.
+   * @returns {ItemSheet5e}  The rendered item sheet.
    * @private
    */
   private _onItemEdit;
   /**
-   * Handle deleting an existing Owned Item for the Actor
-   * @param {Event} event   The originating click event
+   * Handle deleting an existing Owned Item for the Actor.
+   * @param {Event} event  The originating click event.
+   * @returns {Promise<Item5e>|undefined}  The deleted item if something was deleted.
    * @private
    */
   private _onItemDelete;
   /**
-   * Handle rolling an Ability check, either a test or a saving throw
-   * @param {Event} event   The originating click event
+   * Handle displaying the property attribution tooltip when a property is hovered over.
+   * @param {Event} event   The originating mouse event.
+   * @private
+   */
+  private _onPropertyAttribution;
+  /**
+   * Handle rolling an Ability test or saving throw.
+   * @param {Event} event      The originating click event.
    * @private
    */
   private _onRollAbilityTest;
   /**
-   * Handle rolling a Skill check
-   * @param {Event} event   The originating click event
+   * Handle rolling a Skill check.
+   * @param {Event} event      The originating click event.
+   * @returns {Promise<Roll>}  The resulting roll.
    * @private
    */
   private _onRollSkillCheck;
   /**
-   * Handle toggling Ability score proficiency level
-   * @param {Event} event     The originating click event
+   * Handle toggling Ability score proficiency level.
+   * @param {Event} event         The originating click event.
+   * @returns {Promise<Actor5e>}  Updated actor instance.
    * @private
    */
   private _onToggleAbilityProficiency;
   /**
-   * Handle toggling of filters to display a different set of owned items
-   * @param {Event} event     The click event which triggered the toggle
+   * Handle toggling of filters to display a different set of owned items.
+   * @param {Event} event     The click event which triggered the toggle.
+   * @returns {ActorSheet5e}  This actor sheet with toggled filters.
    * @private
    */
   private _onToggleFilter;
   /**
-   * Handle spawning the TraitSelector application which allows a checkbox of multiple trait options
-   * @param {Event} event   The click event which originated the selection
+   * Handle spawning the ProficiencySelector application to configure armor, weapon, and tool proficiencies.
+   * @param {Event} event            The click event which originated the selection.
+   * @returns {ProficiencySelector}  Newly displayed application.
+   * @private
+   */
+  private _onProficiencySelector;
+  /**
+   * Handle spawning the TraitSelector application which allows a checkbox of multiple trait options.
+   * @param {Event} event      The click event which originated the selection.
+   * @returns {TraitSelector}  Newly displayed application.
    * @private
    */
   private _onTraitSelector;

@@ -1,10 +1,16 @@
 /**
+ * Deprecated.
+ * @param {object} data
+ * @param {object} options
  * @deprecated since 1.3.0
  * @ignore
  */
-declare function d20Dialog(data: any, options: any): Promise<void>;
+declare function d20Dialog(data: object, options: object): Promise<void>;
 /**
+ * Deprecated.
+ * @param {object} data
+ * @param {object} options
  * @deprecated since 1.3.0
  * @ignore
  */
-declare function damageDialog(data: any, options: any): Promise<void>;
+declare function damageDialog(data: object, options: object): Promise<void>;

@@ -1,3 +1,3 @@
-declare function highlightCriticalSuccessFailure(message: any, html: any, data: any): void;
-declare function displayChatActionButtons(message: any, html: any, data: any): void;
-declare function addChatMessageContextOptions(html: HTMLElement, options: any[]): any[];
+declare function highlightCriticalSuccessFailure(message: ChatMessage, html: HTMLElement, data: object): void;
+declare function displayChatActionButtons(message: ChatMessage, html: HTMLElement, data: object): void;
+declare function addChatMessageContextOptions(html: HTMLElement, options: object[]): object[];

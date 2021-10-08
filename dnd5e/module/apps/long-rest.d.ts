@@ -21,7 +21,7 @@ declare class LongRestDialog extends Dialog<Dialog.Options> {
       id: string;
       title: string;
       scrollY: string[];
-      tabs: Omit<Tabs.Options, 'callback'>[];
+      tabs: Omit<TabsConfiguration, 'callback'>[];
       dragDrop: Omit<DragDrop.Options, 'permissions' | 'callbacks'>[];
       filters: Omit<SearchFilter.Options, 'callback'>[];
     },
@@ -37,7 +37,7 @@ declare class LongRestDialog extends Dialog<Dialog.Options> {
    * A helper constructor function which displays the Long Rest confirmation dialog and returns a Promise once it's
    * workflow has been resolved.
    * @param {Actor5e} actor
-   * @return {Promise}
+   * @returns {Promise}
    */
   static longRestDialog({ actor }?: any): Promise<any>;
   constructor(actor: any, dialogData?: {}, options?: {});

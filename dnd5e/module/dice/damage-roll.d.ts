@@ -7,7 +7,8 @@
  * @param {number} [options.criticalMultiplier=2]     A critical hit multiplier which is applied to critical hits
  * @param {boolean} [options.multiplyNumeric=false]   Multiply numeric terms by the critical multiplier
  * @param {boolean} [options.powerfulCritical=false]  Apply the "powerful criticals" house rule to critical hits
- *
+ * @param {string} [options.criticalBonusDamage]      An extra damage term that is applied only on a critical hit
+ * @extends {Roll}
  */
 declare class DamageRoll extends Roll<any> {
   /**
@@ -15,6 +16,8 @@ declare class DamageRoll extends Roll<any> {
    * @type {string}
    */
   static EVALUATION_TEMPLATE: string;
+  /** @inheritdoc */
+  static fromData(data: any): Roll<object>;
   constructor(formula: any, data: any, options: any);
   /**
    * A convenience reference for whether this DamageRoll is a critical hit
@@ -35,7 +38,8 @@ declare class DamageRoll extends Roll<any> {
    * @param {string} [data.template]            A custom path to an HTML template to use instead of the default
    * @param {boolean} [data.allowCritical=true] Allow critical hit to be chosen as a possible damage mode
    * @param {object} options                  Additional Dialog customization options
-   * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
+   * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the
+   *                                          dialog was closed
    */
   configureDialog(
     {
@@ -55,8 +59,9 @@ declare class DamageRoll extends Roll<any> {
   ): Promise<any | null>;
   /**
    * Handle submission of the Roll evaluation configuration Dialog
-   * @param {jQuery} html             The submitted dialog content
-   * @param {boolean} isCritical      Is the damage a critical hit?
+   * @param {jQuery} html         The submitted dialog content
+   * @param {boolean} isCritical  Is the damage a critical hit?
+   * @returns {DamageRoll}        This damage roll.
    * @private
    */
   private _onDialogSubmit;

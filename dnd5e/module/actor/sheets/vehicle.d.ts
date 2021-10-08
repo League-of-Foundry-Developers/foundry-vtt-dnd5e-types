@@ -4,12 +4,10 @@
  * @type {ActorSheet5e}
  */
 declare class ActorSheet5eVehicle extends ActorSheet5e {
-  /**
-   * Define default rendering options for the Vehicle sheet.
-   */
+  /** @inheritdoc */
   static get defaultOptions(): import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/utils/helpers.mjs').InsertKeys<
     {
-      token?: TokenConfig<TokenConfig.Options> | null | undefined;
+      token?: TokenDocument | null | undefined;
       classes: string[];
       template: string;
       viewPermission: 0 | 2 | 1 | 3;
@@ -48,15 +46,13 @@ declare class ActorSheet5eVehicle extends ActorSheet5e {
   >;
   /**
    * Creates a new cargo entry for a vehicle Actor.
+   * @type {object}
    */
-  static get newCargo(): {
-    name: string;
-    quantity: number;
-  };
+  static get newCargo(): any;
   /**
    * Compute the total weight of the vehicle's cargo.
-   * @param {Number} totalWeight    The cumulative item weight from inventory items
-   * @param {Object} actorData      The data object for the Actor being rendered
+   * @param {number} totalWeight    The cumulative item weight from inventory items
+   * @param {object} actorData      The data object for the Actor being rendered
    * @returns {{max: number, value: number, pct: number}}
    * @private
    */
@@ -64,39 +60,48 @@ declare class ActorSheet5eVehicle extends ActorSheet5e {
   /**
    * Prepare items that are mounted to a vehicle and require one or more crew
    * to operate.
+   * @param {object} item  Copy of the item data being prepared for display. *Will be mutated.*
    * @private
    */
   private _prepareCrewedItem;
   /**
    * Organize Owned Items for rendering the Vehicle sheet.
+   * @param {object} data  Copy of the actor data being prepared for display. *Will be mutated.*
    * @private
    */
   private _prepareItems;
   /**
    * Handle saving a cargo row (i.e. crew or passenger) in-sheet.
-   * @param event {Event}
-   * @returns {Promise<Actor>|null}
+   * @param {Event} event  Triggering event.
+   * @returns {Promise<Actor5e>|null}  Actor after update if any changes were made.
    * @private
    */
   private _onCargoRowChange;
   /**
    * Handle editing certain values like quantity, price, and weight in-sheet.
-   * @param event {Event}
-   * @returns {Promise<Item>}
+   * @param {Event} event  Triggering event.
+   * @returns {Promise<Item5e>}  Item with updates applied.
    * @private
    */
   private _onEditInSheet;
   /**
    * Special handling for editing HP to clamp it within appropriate range.
-   * @param event {Event}
-   * @returns {Promise<Item>}
+   * @param {Event} event  Triggering event.
+   * @returns {Promise<Item5e>}  Item after the update is applied.
    * @private
    */
   private _onHPChange;
   /**
+   * Special handling for editing quantity value of equipment and weapons inside the features tab.
+   * @param {Event} event  Triggering event.
+   * @returns {Promise<Item5e>}  Item after the update is applied.
+   * @private
+   */
+  private _onQtyChange;
+  /**
    * Handle toggling an item's crewed status.
-   * @param event {Event}
-   * @returns {Promise<Item>}
+   * @param {Event} event  Triggering event.
+   * @returns {Promise<Item5e>}  Item after the toggling is applied.
    * @private
    */
   private _onToggleItem;

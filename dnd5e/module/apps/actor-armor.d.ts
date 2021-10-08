@@ -1,8 +1,8 @@
 /**
- * A simple form to set Actor movement speeds.
+ * Interface for managing a character's armor calculation.
  * @extends {DocumentSheet}
  */
-declare class ActorSensesConfig extends DocumentSheet<
+declare class ActorArmorConfig extends DocumentSheet<
   DocumentSheet.Options,
   DocumentSheet.Data<
     import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/document.mjs').default<

@@ -32,7 +32,7 @@ declare class ActorSheetFlags
       id: string;
       title: string;
       scrollY: string[];
-      tabs: Omit<Tabs.Options, 'callback'>[];
+      tabs: Omit<TabsConfiguration, 'callback'>[];
       dragDrop: Omit<DragDrop.Options, 'permissions' | 'callbacks'>[];
       filters: Omit<SearchFilter.Options, 'callback'>[];
       closeOnSubmit: boolean;
@@ -60,20 +60,20 @@ declare class ActorSheetFlags
   );
   /**
    * Prepare an object of sorted classes.
-   * @return {object}
+   * @returns {object}
    * @private
    */
   private _getClasses;
   /**
    * Prepare an object of flags data which groups flags by section
    * Add some additional data for rendering
-   * @return {object}
+   * @returns {object}
    * @private
    */
   private _getFlags;
   /**
    * Get the bonuses fields and their localization strings
-   * @return {Array<object>}
+   * @returns {Array<object>}
    * @private
    */
   private _getBonuses;

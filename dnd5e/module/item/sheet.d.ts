@@ -1,5 +1,5 @@
 /**
- * Override and extend the core ItemSheet implementation to handle specific item types
+ * Override and extend the core ItemSheet implementation to handle specific item types.
  * @extends {ItemSheet}
  */
 declare class ItemSheet5e extends ItemSheet<DocumentSheet.Options, ItemSheet.Data<DocumentSheet.Options>> {
@@ -51,43 +51,52 @@ declare class ItemSheet5e extends ItemSheet<DocumentSheet.Options, ItemSheet.Dat
   >;
   constructor(...args: any[]);
   /**
+   * Get the base weapons and tools based on the selected type.
+   *
+   * @param {object} item        Item data for the item being displayed
+   * @returns {Promise<object>}  Object with base items for this type formatted for selectOptions.
+   * @protected
+   */
+  protected _getItemBaseTypes(item: object): Promise<object>;
+  /**
    * Get the valid item consumption targets which exist on the actor
-   * @param {Object} item         Item data for the item being displayed
-   * @return {{string: string}}   An object of potential consumption targets
+   * @param {object} item         Item data for the item being displayed
+   * @returns {{string: string}}   An object of potential consumption targets
    * @private
    */
   private _getItemConsumptionTargets;
   /**
-   * Get the text item status which is shown beneath the Item type in the top-right corner of the sheet
-   * @return {string}
+   * Get the text item status which is shown beneath the Item type in the top-right corner of the sheet.
+   * @param {object} item    Copy of the item data being prepared for display.
+   * @returns {string|null}  Item status string if applicable to item's type.
    * @private
    */
   private _getItemStatus;
   /**
-   * Get the Array of item properties which are used in the small sidebar of the description tab
-   * @return {Array}
+   * Get the Array of item properties which are used in the small sidebar of the description tab.
+   * @param {object} item  Copy of the item data being prepared for display.
+   * @returns {string[]}   List of property labels to be shown.
    * @private
    */
   private _getItemProperties;
   /**
-   * Is this item a separate large object like a siege engine or vehicle
-   * component that is usually mounted on fixtures rather than equipped, and
-   * has its own AC and HP.
-   * @param item
-   * @returns {boolean}
+   * Is this item a separate large object like a siege engine or vehicle component that is
+   * usually mounted on fixtures rather than equipped, and has its own AC and HP.
+   * @param {object} item  Copy of item data being prepared for display.
+   * @returns {boolean}    Is item siege weapon or vehicle equipment?
    * @private
    */
   private _isItemMountable;
   /**
-   * Add or remove a damage part from the damage formula
-   * @param {Event} event     The original click event
-   * @return {Promise}
+   * Add or remove a damage part from the damage formula.
+   * @param {Event} event             The original click event.
+   * @returns {Promise<Item5e>|null}  Item with updates applied.
    * @private
    */
   private _onDamageControl;
   /**
    * Handle spawning the TraitSelector application for selection various options.
-   * @param {Event} event   The click event which originated the selection
+   * @param {Event} event   The click event which originated the selection.
    * @private
    */
   private _onConfigureTraits;
