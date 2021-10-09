@@ -1,3 +1,5 @@
+/* This File is not Auto-generatable */
+
 declare namespace data5e {
   // Actors
   interface CharacterDataSource {

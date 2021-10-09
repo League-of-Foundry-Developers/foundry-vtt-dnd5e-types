@@ -1,3 +1,5 @@
+/* This File is not Auto-generatable */
+
 import './dnd5e/template';
 import './dnd5e/dnd5e';
 
