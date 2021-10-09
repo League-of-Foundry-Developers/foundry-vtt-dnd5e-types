@@ -177,5 +177,3 @@ declare function damageRoll({
  * Backport Roll#isDeterministic functionality from later foundry versions.
  */
 declare function shimIsDeterministic(): void;
-export { default as D20Roll } from './dice/d20-roll.js';
-export { default as DamageRoll } from './dice/damage-roll.js';

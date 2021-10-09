@@ -81,7 +81,7 @@ declare class PropertyAttribution extends Application<Application.Options> {
 /**
  * Description for a single part of a property attribution.
  */
-export type AttributionDescription = {
+declare type AttributionDescription = {
   /**
    * Descriptive label that will be displayed. If the label is in the form
    * of an @ property, the system will try to turn it into a human-readable label.

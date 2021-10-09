@@ -8,6 +8,10 @@ declare interface DND5e {
    * The set of Ability Scores used within the system
    */
   abilities: Record<DND5e.AbilityType, string>;
+
+  /**
+   * Localized abbreviations for Ability Scores.
+   */
   abilityAbbreviations: Record<DND5e.AbilityType, string>;
 
   /* -------------------------------------------- */
@@ -34,7 +38,32 @@ declare interface DND5e {
   attunements: Record<DND5e['attunementTypes'][keyof DND5e['attunementTypes']], string>;
 
   /* -------------------------------------------- */
+
+  /**
+   * General weapon categories.
+   */
   weaponProficiencies: Record<DND5e.WeaponProficiency, string>;
+
+  /**
+   * A mapping between `DND5E.weaponTypes` and `DND5E.weaponProficiencies` that
+   * is used to determine if character has proficiency when adding an item.
+   */
+  weaponProficienciesMap: Record<DND5e.WeaponType, DND5e.WeaponProficiency | true>;
+
+  /**
+   * The basic weapon types in 5e. This enables specific weapon proficiencies or
+   * starting equipment provided by classes and backgrounds.
+   */
+  weaponIds: Record<DND5e.WeaponItems, string>;
+
+  /**
+   * The categories into which Tool items can be grouped.
+   */
+  toolTypes: Record<any, string>;
+
+  /**
+   * The categories of tool proficiencies that a character can gain.
+   */
   toolProficiencies: Record<DND5e.ToolProficiency, string>;
 
   /**
@@ -63,14 +92,26 @@ declare interface DND5e {
 
   /* -------------------------------------------- */
 
-  // Creature Sizes
+  /**
+   * Creature sizes.
+   */
   actorSizes: Record<DND5e.Size, string>;
+
+  /**
+   * Default token image size for the values of `DND5E.actorSizes`.
+   */
   tokenSizes: Record<DND5e.Size, number>;
 
+  /**
+   * Colors used to visualize temporary and temporary maximum HP in token health bars.
+   */
   tokenHPColors: Record<DND5e.TokenHpTypes, number>;
 
   /* -------------------------------------------- */
 
+  /**
+   * Default types of creatures.
+   */
   creatureTypes: Record<DND5e.CreatureTypes, string>;
 
   /* -------------------------------------------- */
@@ -81,10 +122,21 @@ declare interface DND5e {
   itemActionTypes: Record<DND5e.ActionType, string>;
 
   /* -------------------------------------------- */
+
+  /**
+   * Different ways in which item capacity can be limited.
+   */
   itemCapacityTypes: {
     items: string;
     weight: string;
   };
+
+  /* -------------------------------------------- */
+
+  /**
+   * List of various item rarities.
+   */
+  itemRarity: Record<DND5e.ItemRarity, string>;
 
   /* -------------------------------------------- */
 
@@ -96,9 +148,30 @@ declare interface DND5e {
   /* -------------------------------------------- */
 
   /**
+   * Specific equipment types that modify base AC.
+   */
+  armorTypes: Record<DND5e.ArmorType, string>;
+
+  /* -------------------------------------------- */
+
+  /**
+   * Equipment types that aren't armor.
+   */
+  miscEquipmentTypes: Record<DND5e.MiscEquipmentType, string>;
+
+  /* -------------------------------------------- */
+
+  /**
    * The set of equipment types for armor, clothing, and other objects which can ber worn by the character
    */
-  equipmentTypes: Record<DND5e.ArmorType, string>;
+  equipmentTypes: Record<DND5e.EquipmentType, string>;
+
+  /* -------------------------------------------- */
+
+  /**
+   * The various types of vehicles in which characters can be proficient.
+   */
+  vehicleTypes: Record<DND5e.VehicleType, string>;
 
   /* -------------------------------------------- */
 
@@ -107,10 +180,27 @@ declare interface DND5e {
    */
   armorProficiencies: Record<DND5e.ArmorProficiencies, string>;
 
-  armorProficienciesMap: Record<
-    Exclude<DND5e.ArmorType, 'trinket' | 'vehicle' | 'bonus'>,
-    boolean | DND5e.ArmorProficiencies
-  >;
+  /**
+   * A mapping between `DND5E.equipmentTypes` and `DND5E.armorProficiencies` that
+   * is used to determine if character has proficiency when adding an item.
+   */
+  armorProficienciesMap: Record<DND5e.ArmorType, boolean | DND5e.ArmorProficiencies>;
+
+  /**
+   * The basic armor types in 5e. This enables specific armor proficiencies,
+   * automated AC calculation in NPCs, and starting equipment.
+   */
+  armorIds: Record<DND5e.ArmorItem, string>;
+
+  /**
+   * The basic shield in 5e.
+   */
+  shieldIds: { shield: string };
+
+  /**
+   * Common armor class calculations.
+   */
+  armorClasses: Record<string, DND5e.ArmorClass>;
 
   /* -------------------------------------------- */
 
@@ -124,19 +214,18 @@ declare interface DND5e {
   /**
    * The valid currency denominations supported by the 5e system
    */
-  currencies: Record<DND5e.Currency, string>;
-
-  /**
-   * Define the upwards-conversion rules for registered currency types
-   */
-  currencyConversion: Record<DND5e.Currency, { into: DND5e.Currency; each: number }>;
+  currencies: Record<DND5e.Currency, DND5e.CurrencyProperties>;
 
   /* -------------------------------------------- */
 
-  // Damage Types
+  /**
+   * Types of damage the can be caused by abilities.
+   */
   damageTypes: Record<DND5e.DamageType, string>;
 
-  // Damage Resistance Types
+  /**
+   * Types of damage to which an actor can possess resistance, immunity, or vulnerability.
+   */
   damageResistanceTypes: Record<DND5e.DamageResistanceType, string>;
 
   /* -------------------------------------------- */
@@ -165,29 +254,31 @@ declare interface DND5e {
    * Configure aspects of encumbrance calculation so that it could be configured by modules
    */
   encumbrance: {
-    currencyPerWeight: number;
-    strMultiplier: number;
-    vehicleWeightMultiplier: number;
+    currencyPerWeight: DND5e.EncumberanceCalculation;
+    strMultiplier: DND5e.EncumberanceCalculation;
+    vehicleWeightMultiplier: DND5e.EncumberanceCalculation;
   };
 
   /* -------------------------------------------- */
 
   /**
-   * This Object defines the types of single or area targets which can be applied
+   * The types of single or area targets which can be applied to abilities.
    */
   targetTypes: Record<DND5e.TargetType, string>;
 
   /* -------------------------------------------- */
 
   /**
-   * Map the subset of target types which produce a template area of effect
-   * The keys are DND5E target types and the values are MeasuredTemplate shape types
+   * Mapping between `DND5E.targetTypes` and `MeasuredTemplate` shape types to define
+   * which templates are produced by which area of effect target type.
    */
   areaTargetTypes: Record<DND5e.AreaTarget, string>;
 
   /* -------------------------------------------- */
 
-  // Healing Types
+  /**
+   * Different types of healing that can be applied using abilities.
+   */
   healingTypes: {
     healing: string;
     temphp: string;
@@ -196,7 +287,7 @@ declare interface DND5e {
   /* -------------------------------------------- */
 
   /**
-   * Enumerate the denominations of hit dice which can apply to classes
+   * Denominations of hit dice which can apply to classes.
    */
   hitDieTypes: `d${string}`[];
 
@@ -216,8 +307,17 @@ declare interface DND5e {
 
   /* -------------------------------------------- */
 
+  /**
+   * Various different ways a spell can be prepared.
+   */
   spellPreparationModes: Record<DND5e.Preparation, string>;
+  /**
+   * Subset of `DND5E.spellPreparationModes` that consume spell slots.
+   */
   spellUpcastModes: DND5e.Preparation[];
+  /**
+   * Ways in which a class can contribute to spellcasting levels.
+   */
   spellProgression: Record<DND5e.SpellcasterProgression, string>;
 
   /* -------------------------------------------- */
@@ -230,27 +330,35 @@ declare interface DND5e {
   /* -------------------------------------------- */
 
   /**
-   * Define the set of types which a weapon item can take
+   * The set of types which a weapon item can take.
    */
   weaponTypes: Record<DND5e.WeaponType, string>;
 
   /* -------------------------------------------- */
 
   /**
-   * Define the set of weapon property flags which can exist on a weapon
+   * The set of weapon property flags which can exist on a weapon.
    */
   weaponProperties: Record<DND5e.WeaponProperty, string>;
 
-  // Spell Components
+  /**
+   * Types of components that can be required when casting a spell.
+   */
   spellComponents: Record<DND5e.SpellComponent, string>;
 
-  // Spell Schools
+  /**
+   * Schools to which a spell can belong.
+   */
   spellSchools: Record<DND5e.SpellSchool, string>;
 
-  // Spell Levels
+  /**
+   * Valid spell levels.
+   */
   spellLevels: Record<DND5e.SpellLevel, string>;
 
-  // Spell Scroll Compendium UUIDs
+  /**
+   * Spell scroll item ID within the `DND5E.sourcePacks` compendium for each level.
+   */
   spellScrollIds: Record<DND5e.SpellLevel, string>;
 
   /**
@@ -266,7 +374,9 @@ declare interface DND5e {
 
   /* -------------------------------------------- */
 
-  // Polymorph options.
+  /**
+   * Settings to configure how actors are merged when polymorphing is applied.
+   */
   polymorphSettings: Record<DND5e.PolymorphSetting, string>;
 
   /* -------------------------------------------- */
@@ -288,22 +398,47 @@ declare interface DND5e {
 
   /* -------------------------------------------- */
 
-  // Condition Types
+  /**
+   * A selection of actor attributes that can be tracked on token resource bars.
+   */
+  trackableAttributes: string[];
+
+  /* -------------------------------------------- */
+
+  /**
+   * A selection of actor and item attributes that are valid targets for item resource consumption.
+   */
+  consumableResources: string[];
+  /* -------------------------------------------- */
+
+  /**
+   * Conditions that can effect an actor.
+   */
   conditionTypes: Record<DND5e.ConditionType, string>;
 
-  // Languages
+  /**
+   * Languages a character can learn.
+   */
   languages: Record<DND5e.Language, string>;
 
-  // Character Level XP Requirements
+  /**
+   * XP required to achieve each character level.
+   */
   CHARACTER_EXP_LEVELS: number[];
 
-  // Challenge Rating XP Levels
+  /**
+   * XP granted for each challenge rating.
+   */
   CR_EXP_LEVELS: number[];
 
-  // Character Features Per Class And Level
+  /**
+   * Character features automatically granted by classes & subclasses at certain levels.
+   */
   classFeatures: ClassFeatures;
 
-  // Configure Optional Character Flags
+  /**
+   * Special character flags.
+   */
   characterFlags: Record<
     DND5e.CharacterFlag,
     {
@@ -322,7 +457,9 @@ declare interface DND5e {
     };
   };
 
-  // Configure allowed status flags
+  /**
+   * Flags allowed on actors. Any flags not in the list may be deleted during a migration.
+   */
   allowedActorFlags: [...DND5e.CharacterFlagArr, 'isPolymorphed', 'originalActor'];
 }
 
@@ -466,6 +603,12 @@ declare namespace DND5e {
 
   type Currency = 'cp' | 'sp' | 'gp' | 'ep' | 'pp';
 
+  interface CurrencyProperties {
+    label: string;
+    abbreviation: string;
+    conversion?: { into: Currency; each: number };
+  }
+
   type SpellSchool = 'abj' | 'con' | 'div' | 'enc' | 'evo' | 'ill' | 'nec' | 'trs';
   type Preparation = 'prepared' | 'pact' | 'always' | 'atwill' | 'innate';
 
@@ -478,7 +621,32 @@ declare namespace DND5e {
   type ConsumableType = 'ammo' | 'potion' | 'poison' | 'food' | 'scroll' | 'wand' | 'rod' | 'trinket';
   type ConsumeTarget = string;
 
-  type ArmorType = 'light' | 'medium' | 'heavy' | 'bonus' | 'natural' | 'shield' | 'clothing' | 'trinket' | 'vehicle';
+  type ArmorType = 'light' | 'medium' | 'heavy' | 'natural' | 'shield';
+
+  type MiscEquipmentType = 'clothing' | 'trinket' | 'vehicle';
+
+  type ArmorItem =
+    | 'breastplate'
+    | 'chainmail'
+    | 'chainshirt'
+    | 'halfplate'
+    | 'hide'
+    | 'leather'
+    | 'padded'
+    | 'plate'
+    | 'ringmail'
+    | 'scalemail'
+    | 'splint'
+    | 'studded';
+
+  interface ArmorClass {
+    label: string;
+    formula: string;
+  }
+
+  type EquipmentType = ArmorType | MiscEquipmentType;
+
+  type VehicleType = 'air' | 'land' | 'water';
 
   type ArmorProficiencies = 'lgt' | 'med' | 'hvy' | 'shl';
 
@@ -629,4 +797,50 @@ declare namespace DND5e {
   type Class = keyof Subclasses;
 
   type RollMode = 'roll' | 'gmroll' | 'blindroll' | 'selfroll';
+
+  type WeaponItems =
+    | 'battleaxe'
+    | 'blowgun'
+    | 'club'
+    | 'dagger'
+    | 'dart'
+    | 'flail'
+    | 'glaive'
+    | 'greataxe'
+    | 'greatclub'
+    | 'greatsword'
+    | 'halberd'
+    | 'handaxe'
+    | 'handcrossbow'
+    | 'heavycrossbow'
+    | 'javelin'
+    | 'lance'
+    | 'lightcrossbow'
+    | 'lighthammer'
+    | 'longbow'
+    | 'longsword'
+    | 'mace'
+    | 'maul'
+    | 'morningstar'
+    | 'net'
+    | 'pike'
+    | 'quarterstaff'
+    | 'rapier'
+    | 'scimitar'
+    | 'shortsword'
+    | 'sickle'
+    | 'spear'
+    | 'shortbow'
+    | 'sling'
+    | 'trident'
+    | 'warpick'
+    | 'warhammer'
+    | 'whip';
+
+  type ItemRarity = 'common' | 'uncommon' | 'rare' | 'veryRare' | 'legendary' | 'artifact';
+
+  interface EncumberanceCalculation {
+    imperial: number;
+    metric: number;
+  }
 }

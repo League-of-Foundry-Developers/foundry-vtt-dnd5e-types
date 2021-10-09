@@ -13,6 +13,8 @@ declare interface Game {
       TraitSelector: TraitSelector;
       ActorMovementConfig: ActorMovementConfig;
       ActorSensesConfig: ActorSensesConfig;
+      ActorAbilityConfig: ActorAbilityConfig;
+      ActorSkillConfig: ActorSkillConfig;
     };
     canvas: {
       AbilityTemplate: AbilityTemplate;
@@ -20,7 +22,6 @@ declare interface Game {
     config: DND5e;
     dice: {
       simplifyRollFormula: typeof simplifyRollFormula;
-      _isUnsupportedTerm: typeof _isUnsupportedTerm;
       d20Roll: typeof d20Roll;
       D20Roll: D20Roll;
       damageRoll: typeof damageRoll;
@@ -42,8 +43,10 @@ declare interface Game {
       migrateWorld: typeof migrateWorld;
       migrateCompendium: typeof migrateCompendium;
       migrateActorData: typeof migrateActorData;
+      migrateArmorClass: typeof migrateArmorClass;
       migrateItemData: typeof migrateItemData;
       migrateSceneData: typeof migrateSceneData;
+      getMigrationData: typeof getMigrationData;
     };
     rollItemMacro: typeof rollItemMacro;
   };
