@@ -3,11 +3,12 @@
  * Extends the base ActorSheet5e class.
  * @type {ActorSheet5e}
  */
+//@ts-expect-error  Not sure why this is any different than npcs
 declare class ActorSheet5eVehicle extends ActorSheet5e {
   /** @inheritdoc */
   static get defaultOptions(): import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/utils/helpers.mjs').InsertKeys<
     {
-      token?: TokenDocument | null | undefined;
+      token?: TokenDocument5e | null | undefined;
       classes: string[];
       template: string;
       viewPermission: 0 | 2 | 1 | 3;

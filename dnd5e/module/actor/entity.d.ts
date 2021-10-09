@@ -257,10 +257,20 @@ declare class Actor5e extends Actor {
    * Roll a hit die of the appropriate type, gaining hit points equal to the die roll plus your CON modifier
    * @param {string} [denomination]   The hit denomination of hit die to roll. Example "d8".
    *                                  If no denomination is provided, the first available HD will be used
-   * @param {boolean} [dialog]        Show a dialog prompt for configuring the hit die roll?
+   * @param {object} [options]        Show a dialog prompt for configuring the hit die roll?
+   * @param {boolean} [options.dialog]        Show a dialog prompt for configuring the hit die roll?
    * @returns {Promise<Roll|null>}    The created Roll instance, or null if no hit die was rolled
    */
-  rollHitDie(denomination?: string | undefined, { dialog }?: boolean | undefined): Promise<Roll | null>;
+  rollHitDie(
+    denomination?: string | undefined,
+    {
+      dialog
+    }?:
+      | {
+          dialog?: boolean | undefined;
+        }
+      | undefined
+  ): Promise<Roll | null>;
   /**
    * Results from a rest operation.
    *
@@ -608,5 +618,5 @@ declare class Actor5e extends Actor {
    * @returns {Promise<ChatMessage|object|void>}  Dialog if `configureDialog` is true, else prepared dialog data.
    * @deprecated since dnd5e 1.2.0
    */
-  useSpell(item: Item5e, { configureDialog }?: Event): Promise<ChatMessage | object | void>;
+  useSpell(item: Item5e, { configureDialog }?: { configureDialog?: boolean }): Promise<ChatMessage | object | void>;
 }

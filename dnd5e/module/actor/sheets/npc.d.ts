@@ -6,7 +6,7 @@ declare class ActorSheet5eNPC extends ActorSheet5e {
   /** @override */
   get defaultOptions(): import('@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/utils/helpers.mjs').InsertKeys<
     {
-      token?: TokenDocument | null | undefined;
+      token?: TokenDocument5e | null | undefined;
       classes: string[];
       template: string;
       viewPermission: 0 | 2 | 1 | 3;

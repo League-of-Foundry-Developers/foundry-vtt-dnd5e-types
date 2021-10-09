@@ -10,14 +10,14 @@
  * @param {string} [options.criticalBonusDamage]      An extra damage term that is applied only on a critical hit
  * @extends {Roll}
  */
-declare class DamageRoll extends Roll<any> {
+declare class DamageRoll extends Roll<object> {
   /**
    * The HTML template path used to configure evaluation of this Roll
    * @type {string}
    */
   static EVALUATION_TEMPLATE: string;
   /** @inheritdoc */
-  static fromData(data: any): Roll<object>;
+  static fromData(data: any): any;
   constructor(formula: any, data: any, options: any);
   /**
    * A convenience reference for whether this DamageRoll is a critical hit

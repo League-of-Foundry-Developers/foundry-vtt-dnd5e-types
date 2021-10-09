@@ -32,6 +32,7 @@ declare class ActorSheetFlags
       id: string;
       title: string;
       scrollY: string[];
+      //@ts-expect-error Not sure why TabsConfiguration isn't around
       tabs: Omit<TabsConfiguration, 'callback'>[];
       dragDrop: Omit<DragDrop.Options, 'permissions' | 'callbacks'>[];
       filters: Omit<SearchFilter.Options, 'callback'>[];

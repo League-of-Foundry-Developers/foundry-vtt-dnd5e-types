@@ -16,4 +16,5 @@ declare class ActorTypeConfig extends FormApplication<
    * @private
    */
   private _onCustomFieldFocused;
+  _updateObject: any;
 }
