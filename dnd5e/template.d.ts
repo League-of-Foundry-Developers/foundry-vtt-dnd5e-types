@@ -519,7 +519,7 @@ declare namespace data5e {
   interface Action {
     ability: null;
     actionType: null;
-    attackBonus: number;
+    attackBonus: string;
     chatFlavor: string;
     critical: null;
     damage: Damage;
